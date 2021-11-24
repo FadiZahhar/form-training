@@ -14,8 +14,13 @@ class App extends React.Component {
     const gender = this.genderRef.value
     const pet = this.form.pet.value
 
+    // to get out the checked inputs
+    const role = this.form.role
+    const roleArray = Array.prototype.slice.call(role)
+    const checkRoleArray = roleArray.filter(input => input.checked)
+    const checkValues = checkRoleArray.map(input => input.value)
 
-    alert(pet)
+    alert(checkValues)
   }
 
   render() {
@@ -51,6 +56,11 @@ class App extends React.Component {
           Cat <input type="radio" name="pet" value="Cat" />
         </div>
 
+        <div className={styles.form_group}>
+          <input type="checkbox" name="role" value="Designer" /> Designer
+          <input type="checkbox" name="role" value="Frontend" /> Frontend
+          <input type="checkbox" name="role" value="Backend" /> Backend
+        </div>
         <button className={styles.button}>Submit</button>
 
       </form>
