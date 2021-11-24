@@ -20,9 +20,33 @@ class App extends React.Component {
     const checkRoleArray = roleArray.filter(input => input.checked)
     const checkValues = checkRoleArray.map(input => input.value)
 
-    alert(checkValues)
+    // alert(checkValues)
+    const errors = this.validation(name, password, gender, pet, checkValues)
+    if (errors.length) {
+      alert(errors)
+      return;
+    }
+    alert('Validation successful')
   }
-
+  validation = (name, password, gender, pet, roles) => {
+    let errors = []
+    if (!name.length) {
+      errors.push('Name cannot be empty')
+    }
+    if (!password.length) {
+      errors.push('Password cannot be empty')
+    }
+    if (!gender.length) {
+      errors.push('Gender cannot be empty')
+    }
+    if (!pet.length) {
+      errors.push('Pet cannot be empty')
+    }
+    if (!roles.length) {
+      errors.push('Role cannot be empty')
+    }
+    return errors
+  }
   render() {
     return (
       <form className={styles.container} onSubmit={this.handleSubmit} ref={form => this.form = form}>
