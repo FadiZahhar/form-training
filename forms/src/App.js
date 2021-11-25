@@ -21,6 +21,14 @@ function App() {
 
       ]
     },
+    address: {
+      value: '',
+      validations: [
+        requiredValidation,
+        minimumLengthValidation(10)
+
+      ]
+    },
   }
 
   const { fields, isValid, handleChange, formHandler } = useForm(FIELDS)
@@ -49,13 +57,28 @@ function App() {
           value={fields.password.value}
           placeholder="Password"
           className={styles.form_control}
-
           onChange={event => handleChange(event)}
         />
         {fields.password.touched && fields.password.errors && fields.password.errors.map(error => (
           <div key={error}>{error}</div>
         ))}
       </div>
+      <div className={styles.form_group}>
+        <textarea
+          name="address"
+          value={fields.address.value}
+          className={styles.form_control}
+          placeholder='Address'
+          onChange={event => handleChange(event)}
+        >
+        </textarea>
+        {fields.address.touched && fields.address.errors && fields.address.errors.map(error => (
+          <div key={error}>{error}</div>
+        ))}
+      </div>
+
+
+
       <button className={styles.button} disabled={!isValid}>Submit</button>
 
     </form>
