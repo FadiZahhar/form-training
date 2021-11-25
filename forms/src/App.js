@@ -1,32 +1,29 @@
 import React from 'react'
 import styles from './App.module.css';
-import { useState } from 'react';
 
+import useForm from './useForm';
+import { minimumLengthValidation, requiredValidation } from './validation'
 
 function App() {
 
-  const [name, setName] = useState('')
-  const [password, setPassword] = useState('')
+  const FIELDS = {
+    name: {
+      value: '',
+      validations: [
+        requiredValidation
+      ]
+    },
+    password: {
+      value: '',
+      validations: [
+        requiredValidation,
+        minimumLengthValidation(5)
 
-  const nameHandler = event => {
-    const name = event.target.value
-
-    setName(name)
-  }
-  const passwordHandler = event => {
-    const password = event.target.value
-
-    setPassword(password)
-  }
-
-  const formHandler = event => {
-    event.preventDefault();
-
-    alert(password)
-    alert(name)
-
+      ]
+    },
   }
 
+  const { fields, handleChange, formHandler } = useForm(FIELDS)
 
   return (
     <form className={styles.container} onSubmit={event => formHandler(event)} >
@@ -35,23 +32,29 @@ function App() {
         <input
           name="name"
           type="text"
-          value={name}
+          value={fields.name.value}
           placeholder="Name"
           className={styles.form_control}
 
-          onChange={event => nameHandler(event)}
+          onChange={event => handleChange(event)}
         />
+        {fields.name.touched && fields.name.errors && fields.name.errors.map(error => (
+          <div key={error}>{error}</div>
+        ))}
       </div>
       <div className={styles.form_group}>
         <input
           name="password"
           type="password"
-          value={password}
-          placeholder="password"
+          value={fields.password.value}
+          placeholder="Password"
           className={styles.form_control}
 
-          onChange={event => passwordHandler(event)}
+          onChange={event => handleChange(event)}
         />
+        {fields.password.touched && fields.password.errors && fields.password.errors.map(error => (
+          <div key={error}>{error}</div>
+        ))}
       </div>
       <button className={styles.button}>Submit</button>
 
