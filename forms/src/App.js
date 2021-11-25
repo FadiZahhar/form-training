@@ -23,7 +23,7 @@ function App() {
     },
   }
 
-  const { fields, handleChange, formHandler } = useForm(FIELDS)
+  const { fields, isValid, handleChange, formHandler } = useForm(FIELDS)
 
   return (
     <form className={styles.container} onSubmit={event => formHandler(event)} >
@@ -56,7 +56,7 @@ function App() {
           <div key={error}>{error}</div>
         ))}
       </div>
-      <button className={styles.button}>Submit</button>
+      <button className={styles.button} disabled={!isValid}>Submit</button>
 
     </form>
 

@@ -2,6 +2,7 @@ import { useState } from 'react';
 
 const useForm = FIELDS => {
     const [fields, setFields] = useState(FIELDS)
+    const [isValid, setIsValid] = useState(false)
 
     const handleChange = event => {
         const { name, value } = event.target
@@ -13,7 +14,14 @@ const useForm = FIELDS => {
 
         newFields = setValidationErrors(newFields)
 
+        setIsValid(!hasErrors(newFields))
         setFields(newFields)
+    }
+
+    const hasErrors = fields => {
+        return Object.keys(fields)
+            .map(field => fields[field].errors.length)
+            .reduce((acc, errorCount) => acc + errorCount, 0) > 0
     }
 
     // Run Validation Check.. 
@@ -39,6 +47,7 @@ const useForm = FIELDS => {
     }
     return {
         fields,
+        isValid,
         handleChange,
         formHandler
     }
