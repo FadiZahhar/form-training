@@ -29,6 +29,12 @@ function App() {
 
       ]
     },
+    gender: {
+      value: '',
+      validations: [
+        requiredValidation,
+      ]
+    },
   }
 
   const { fields, isValid, handleChange, formHandler } = useForm(FIELDS)
@@ -77,7 +83,21 @@ function App() {
         ))}
       </div>
 
-
+      <div className={styles.form_group}>
+        <select
+          name="gender"
+          value={fields.gender.value}
+          className={styles.form_control}
+          onChange={event => handleChange(event)}
+        >
+          <option value="">Pick Gender</option>
+          <option value="Male">Male</option>
+          <option value="Female">Female</option>
+        </select>
+        {fields.gender.touched && fields.gender.errors && fields.gender.errors.map(error => (
+          <div key={error}>{error}</div>
+        ))}
+      </div>
 
       <button className={styles.button} disabled={!isValid}>Submit</button>
 
