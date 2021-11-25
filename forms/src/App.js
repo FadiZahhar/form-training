@@ -35,6 +35,12 @@ function App() {
         requiredValidation,
       ]
     },
+    pet: {
+      value: '',
+      validations: [
+        requiredValidation,
+      ]
+    },
   }
 
   const { fields, isValid, handleChange, formHandler } = useForm(FIELDS)
@@ -98,7 +104,10 @@ function App() {
           <div key={error}>{error}</div>
         ))}
       </div>
-
+      <div className={styles.form_group}>
+        Cat <input type="radio" name="pet" value="Cat" checked={fields.pet.value === 'Cat'} onChange={event => handleChange(event)} />
+        Dog <input type="radio" name="pet" value="Dog" checked={fields.pet.value === 'Dog'} onChange={event => handleChange(event)} />
+      </div>
       <button className={styles.button} disabled={!isValid}>Submit</button>
 
     </form>
