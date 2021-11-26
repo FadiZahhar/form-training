@@ -1,7 +1,7 @@
 import React from 'react'
 import styles from './App.module.css';
-import { useForm } from "react-hook-form";
-
+import { useForm, Controller } from "react-hook-form";
+import Select from 'react-select';
 
 const MyInput = ({ name, type, label, placeholder, register, required }) => {
 
@@ -43,10 +43,18 @@ const MyInput = ({ name, type, label, placeholder, register, required }) => {
 }
 
 function App() {
+
+  const options = [
+    { value: "chocolate", label: "Chocolate" },
+    { value: "strawberry", label: "Strawberry" },
+    { value: "vanilla", label: "Vanilla" }
+  ]
+
   // we can set her inside the useForm the default values that will appear in input placeholders
-  const { handleSubmit, register, errors } = useForm({
+  const { handleSubmit, register, errors, control } = useForm({
     defaultValues: {
       name: 'Lamees',
+      select: options[1],
       password: 'lam',
       description: 'React form hook',
 
@@ -56,6 +64,7 @@ function App() {
   const submitted = data => {
     console.log(data)
   }
+
   return (
     <form className={styles.container} onSubmit={handleSubmit(submitted)} >
       <div className={styles.form_group}>
@@ -90,6 +99,32 @@ function App() {
         />
       </div>
 
+      <div className={styles.form_group}>
+        {/* using this form of select won't work for validation 
+        we have to use Controller that will act as Select */}
+        {/* <Select options={options} /> */}
+        <Controller
+
+          name="select"
+
+          control={control}
+          render={({ field }) => <Select
+            {...field}
+            isMulti
+            options={options}
+          />}
+        />
+      </div>
+
+
+      {/* <Select
+        defaultValue={[options[2], options[3]]}
+        isMulti
+        name="colors"
+        options={options}
+        className="basic-multi-select"
+        classNamePrefix="select"
+      /> */}
 
       <button className={styles.button}>Submit</button>
 
