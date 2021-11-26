@@ -43,7 +43,15 @@ const MyInput = ({ name, type, label, placeholder, register, required }) => {
 }
 
 function App() {
-  const { handleSubmit, register, errors } = useForm();
+  // we can set her inside the useForm the default values that will appear in input placeholders
+  const { handleSubmit, register, errors } = useForm({
+    defaultValues: {
+      name: 'Lamees',
+      password: 'lam',
+      description: 'React form hook',
+
+    }
+  });
 
   const submitted = data => {
     console.log(data)
