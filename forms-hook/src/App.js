@@ -2,6 +2,7 @@ import React from 'react'
 import styles from './App.module.css';
 import { useForm, Controller } from "react-hook-form";
 import Select from 'react-select';
+import AsyncSelect, { useAsync } from 'react-select/async';
 
 const MyInput = ({ name, type, label, placeholder, register, required }) => {
 
@@ -58,8 +59,18 @@ function App() {
       password: 'lam',
       description: 'React form hook',
 
+
     }
   });
+
+  const promiseOptions = async inputValue => {
+    let response = await fetch(`http://localhost:7000/index?search=${inputValue}`)
+    let data = await response.json()
+    return data;
+
+  }
+
+
 
   const submitted = data => {
     console.log(data)
@@ -125,6 +136,22 @@ function App() {
         className="basic-multi-select"
         classNamePrefix="select"
       /> */}
+
+      <div className={styles.form_group}>
+        <Controller
+          control={control}
+          name="autocomplete"
+          render={({ field }) => <AsyncSelect
+            {...field}
+            cacheOptions
+            defaultOptions
+            loadOptions={promiseOptions}
+          />}
+
+        />
+
+        {/* <AsyncSelect cacheOptions defaultOptions loadOptions={promiseOptions} /> */}
+      </div>
 
       <button className={styles.button}>Submit</button>
 
