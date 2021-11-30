@@ -119,14 +119,16 @@ function App() {
         <Controller
 
           name="select"
-
+          rules={{ required: 'Select is required' }}
           control={control}
           render={({ field }) => <Select
             {...field}
             isMulti
             options={options}
+
           />}
         />
+        {errors.select && <p>{errors.select.message}</p>}
       </div>
 
 
