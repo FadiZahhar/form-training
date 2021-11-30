@@ -3,6 +3,7 @@ import styles from './App.module.css';
 import { useForm, Controller } from "react-hook-form";
 import Select from 'react-select';
 import AsyncSelect, { useAsync } from 'react-select/async';
+import { RadioGroup, FormControlLabel, Radio } from '@material-ui/core'
 
 const MyInput = ({ name, type, label, placeholder, register, required }) => {
 
@@ -151,6 +152,13 @@ function App() {
         />
 
         {/* <AsyncSelect cacheOptions defaultOptions loadOptions={promiseOptions} /> */}
+      </div>
+
+      <div className={styles.form_group}>
+        <RadioGroup row aria-label="gender" name="row-radio-buttons-group">
+          <FormControlLabel value="female" control={<Radio />} label="Female" />
+          <FormControlLabel value="male" control={<Radio />} label="Male" />
+        </RadioGroup>
       </div>
 
       <button className={styles.button}>Submit</button>
