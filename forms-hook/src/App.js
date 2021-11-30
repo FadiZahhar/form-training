@@ -14,7 +14,7 @@ const MyInput = ({ name, type, label, placeholder, register, required }) => {
         type={type}
         name={name}
         placeholder={placeholder}
-        {...register(label, { required })}
+        {...register(label, {})}
         className={styles.form_control}
       />
     </div>
@@ -59,7 +59,7 @@ function App() {
       // select: options[1],
       // password: 'lam',
       // description: 'React form hook',
-      mode: "onSubmit"
+      mode: "all"
 
     }
   });
@@ -101,12 +101,14 @@ function App() {
         />
       </div>
 
-      {/* <div className={styles.form_group}>
-        <MyInput
+      <div className={styles.form_group}>
+        <input
           name="email"
           type="email"
-          label="Email"
-          register={register({
+          className={styles.form_control}
+          placeholder="Email"
+          label="email"
+          {...register("email", {
             validate: {
               // exactEmail can be anyname its just represent the custom validation name 
               exactEmail: value => {
@@ -114,11 +116,9 @@ function App() {
               },
             }
           })}
-          placeholder="Email"
-
         />
         {errors.email && <p>{errors.email.message}</p>}
-      </div> */}
+      </div>
       <div className={styles.form_group}>
         <MyInput
           name="description"
