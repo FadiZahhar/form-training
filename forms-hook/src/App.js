@@ -59,7 +59,7 @@ function App() {
       // select: options[1],
       // password: 'lam',
       // description: 'React form hook',
-      mode: 'all',
+      mode: "onSubmit"
 
     }
   });
@@ -101,6 +101,24 @@ function App() {
         />
       </div>
 
+      {/* <div className={styles.form_group}>
+        <MyInput
+          name="email"
+          type="email"
+          label="Email"
+          register={register({
+            validate: {
+              // exactEmail can be anyname its just represent the custom validation name 
+              exactEmail: value => {
+                return value === 'lameesaboudarwish@gmail.com' || 'Email must be related to Lamees'
+              },
+            }
+          })}
+          placeholder="Email"
+
+        />
+        {errors.email && <p>{errors.email.message}</p>}
+      </div> */}
       <div className={styles.form_group}>
         <MyInput
           name="description"
@@ -132,14 +150,7 @@ function App() {
       </div>
 
 
-      {/* <Select
-        defaultValue={[options[2], options[3]]}
-        isMulti
-        name="colors"
-        options={options}
-        className="basic-multi-select"
-        classNamePrefix="select"
-      /> */}
+
 
       <div className={styles.form_group}>
         <Controller
@@ -151,10 +162,7 @@ function App() {
             defaultOptions
             loadOptions={promiseOptions}
           />}
-
         />
-
-        {/* <AsyncSelect cacheOptions defaultOptions loadOptions={promiseOptions} /> */}
       </div>
 
       <div className={styles.form_group}>
@@ -169,11 +177,6 @@ function App() {
             </RadioGroup>
           )}
         />
-
-        {/* <RadioGroup row aria-label="gender" name="row-radio-buttons-group">
-          <FormControlLabel value="female" control={<Radio />} label="Female" />
-          <FormControlLabel value="male" control={<Radio />} label="Male" />
-        </RadioGroup> */}
       </div>
 
       <button className={styles.button}>Submit</button>
