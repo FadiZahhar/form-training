@@ -53,13 +53,13 @@ function App() {
   ]
 
   // we can set her inside the useForm the default values that will appear in input placeholders
-  const { handleSubmit, register, errors, control } = useForm({
+  const { handleSubmit, register, formState: { errors }, control } = useForm({
     defaultValues: {
-      name: 'Lamees',
-      select: options[1],
-      password: 'lam',
-      description: 'React form hook',
-
+      // name: 'Lamees',
+      // select: options[1],
+      // password: 'lam',
+      // description: 'React form hook',
+      mode: 'all',
 
     }
   });
@@ -85,18 +85,19 @@ function App() {
           type="text"
           placeholder="Name"
           className={styles.form_control}
-          {...register("name")}
-          required
+          {...register("name", { required: "Name is required", minLength: { value: 5, message: 'Name cannot be less than 5' } })}
+
         />
+        {errors.name && <p>{errors.name.message}</p>}
       </div>
       <div className={styles.form_group}>
         <MyInput
           name="password"
           type="password"
-          label="password"
+          label="Password"
           register={register}
           placeholder="Password"
-          required
+
         />
       </div>
 
@@ -104,10 +105,10 @@ function App() {
         <MyInput
           name="description"
           type="textarea"
-          label="description"
+          label="Description"
           register={register}
           placeholder="description"
-          required
+
         />
       </div>
 
@@ -155,10 +156,22 @@ function App() {
       </div>
 
       <div className={styles.form_group}>
-        <RadioGroup row aria-label="gender" name="row-radio-buttons-group">
+
+        <Controller
+          name="genderR"
+          control={control}
+          render={({ field }) => (
+            <RadioGroup {...field}>
+              <FormControlLabel value="female" control={<Radio />} label="Female" />
+              <FormControlLabel value="male" control={<Radio />} label="Male" />
+            </RadioGroup>
+          )}
+        />
+
+        {/* <RadioGroup row aria-label="gender" name="row-radio-buttons-group">
           <FormControlLabel value="female" control={<Radio />} label="Female" />
           <FormControlLabel value="male" control={<Radio />} label="Male" />
-        </RadioGroup>
+        </RadioGroup> */}
       </div>
 
       <button className={styles.button}>Submit</button>
