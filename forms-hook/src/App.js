@@ -100,6 +100,17 @@ function App() {
 
         />
       </div>
+      <div className={styles.form_group}>
+        <input
+          name="passwordConfirmation"
+          className={styles.form_control}
+          type="password"
+          label="password Confirmation"
+          {...register("name", { required: "Name is required", minLength: { value: 5, message: 'Name cannot be less than 5' } })}
+          placeholder="password Confirmation"
+
+        />
+      </div>
 
       <div className={styles.form_group}>
         <input
