@@ -114,6 +114,10 @@ function App() {
               exactEmail: value => {
                 return value === 'lameesaboudarwish@gmail.com' || 'Email must be related to Lamees'
               },
+            },
+            pattern: {
+              value: /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/i,
+              message: 'Email is not a valid email'
             }
           })}
         />
