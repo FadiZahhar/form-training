@@ -7,6 +7,8 @@ import FacebookIcon from '@mui/icons-material/Facebook';
 import TwitterIcon from '@mui/icons-material/Twitter';
 import FlagIcon from './flagIcon';
 
+
+import Chart from "react-apexcharts";
 class App extends Component{
   renderNav =()=>{
     return(
@@ -69,7 +71,7 @@ class App extends Component{
     return(
                       
               <div className="row">
-                <div className="col-lg-8 col-md-8 col-sm-12 col-xs-12 nb-10 paddingHorizontal5 ">
+                <div className="col-lg-6 col-md-8 col-sm-12 col-xs-12 nb-10 paddingHorizontal5 ">
                   <div className="card">
                     <div className="card-body">
                       {this.renderOverview()}
@@ -77,19 +79,19 @@ class App extends Component{
                     </div>
                   </div>
                 </div>
-                <div className="col-lg-2 col-md-2 col-sm-6 col-xs-12 nb-10 paddingHorizontal5">
+                <div className="col-lg-3 col-md-2 col-sm-6 col-xs-12 nb-10 paddingHorizontal5">
                   <div className="card " style={{height:"100%"}}>
-                    <div className="card-body">
+                    <div className="card-body" style={{padding:0}}>
                       {this.renderFatalityCard()}
                       
                      
                     </div>
                   </div>
                 </div>
-                <div className="col-lg-2 col-md-2 col-sm-6 col-xs-12  nb-10 paddingHorizontal5">
-                  <div className="card">
-                    <div className="card-body">
-                      
+                <div className="col-lg-3 col-md-2 col-sm-6 col-xs-12  nb-10 paddingHorizontal5">
+                  <div className="card" style={{height:"100%"}}>
+                    <div className="card-body" >
+                      {this.renderRecoveryCard()}
                       
                     </div>
                   </div>
@@ -98,6 +100,11 @@ class App extends Component{
            
     )
   }
+  //renderSecondThreeCardBG =()=>{
+   // return(
+
+   // )
+  //}
   renderSecondThreeCard = () =>{
     return(
       <div className="row">
@@ -155,18 +162,235 @@ class App extends Component{
   }
 
   renderFatalityCard =()=>{
+
+    let series = [117,8322];
+    let recoverperson = series[0]/ series[1]*100;
+    let options={
+      legend:{
+        show:false
+      },
+      dataLabels:{
+        enabled:false
+      },
+      plotOptions: {
+        pie: {
+          startAngle: 0,
+          endAngle: 360,
+          expandOnClick: false,
+          offsetX: 0,
+          offsetY: 0,
+          customScale: 1,
+          dataLabels: {
+              offset: 0,
+              minAngleToShowLabel: 10
+          }, 
+          donut: {
+            size: '85%',
+            background: 'transparent',
+            labels: {
+              show: false,
+              name: {
+                show: true,
+                }
+              },
+
+            }
+          },      
+        },
+        fill: {
+          colors: ['rgb(255,154,178)', 'rgb(204,204,204)']
+        },
+        tooltip:{
+          enabled:false
+        },
+        states: {
+          normal: {
+              filter: {
+                  type: 'none',
+                  value: 0,
+              }
+          },
+          hover: {
+              filter: {
+                  type: 'lighten',
+                  value: 0.,
+              }
+          },
+          active: {
+              allowMultipleDataPointsSelection: false,
+              filter: {
+                  type: 'darken',
+                  value: 0.,
+              }
+          },
+      },
+      chart: {
+        selection: {
+          enabled: false,
+
+        },
+        offsetY:-10
+      },
+      
+      
+title: {
+  text: recoverperson.toFixed(1)+"%",
+  align: 'center',
+  margin: 10,
+  offsetX: 0,
+  offsetY: 55,
+  floating: true,
+  style: {
+    fontSize:  '14px',
+    fontWeight:  33,
+    fontFamily:  undefined,
+    color:  '#263238'
+  },
+},
+subtitle: {
+  text: "of total cases",
+  align: 'center',
+  margin: 10,
+  offsetX: 0,
+  offsetY: 75,
+  floating: true,
+  style: {
+    fontSize:  '12px',
+    fontWeight:  'normal',
+    fontFamily:  undefined,
+    color:  '#9699a2'
+  },
+}
+    };
+    
     return(
-      <div className="row">
-        <div className="col-auto">
-        <p><strong>Fatality Rate</strong></p>
+      <div className="row align-items-center no-gutters" style={{height:"100%"}}>
+        <div className="col-lg-6 col-md-6">
+        <Chart options={options} series={series} type="donut" width="100%" height="150px"/>
         </div>
-        <div className="col-auto">
-          <p><strong>Fatality Rate</strong></p>
+        <div className="col-lg-6 col-md-6 text-center">
+          <p className="charTitle"><strong>Fatality Rate</strong></p>
         </div>
 
       </div>
     )
   }
+  renderRecoveryCard =()=>{
+    
+    let series = [6674,8322];
+    
+    let deadperson = series[0]/ series[1]*100;
+    let options={
+      legend:{
+        show:false
+      },
+      dataLabels:{
+        enabled:false
+      },
+      plotOptions: {
+        pie: {
+          startAngle: 0,
+          endAngle: 360,
+          expandOnClick: false,
+          offsetX: 0,
+          offsetY: 0,
+          customScale: 1,
+          dataLabels: {
+              offset: 0,
+              minAngleToShowLabel: 10
+          }, 
+          donut: {
+            size: '85%',
+            background: 'transparent',
+            labels: {
+              show: false,
+              name: {
+                show: true,
+                }
+              },
+
+            }
+          },      
+        },
+        fill: {
+          colors: ['rgb(204,204,204)','rgb(77,175,247)' ]
+        },
+        tooltip:{
+          enabled:false
+        },
+        states: {
+          normal: {
+              filter: {
+                  type: 'none',
+                  value: 0,
+              }
+          },
+          hover: {
+              filter: {
+                  type: 'lighten',
+                  value: 0.,
+              }
+          },
+          active: {
+              allowMultipleDataPointsSelection: false,
+              filter: {
+                  type: 'darken',
+                  value: 0.,
+              }
+          },
+      },
+      chart: {
+        selection: {
+          enabled: false,
+
+        },
+        offsetY:-10
+      },
+      
+      
+title: {
+  text: deadperson.toFixed(1)+"%",
+  align: 'center',
+  margin: 10,
+  offsetX: 0,
+  offsetY: 55,
+  floating: true,
+  style: {
+    fontSize:  '14px',
+    fontWeight:  33,
+    fontFamily:  undefined,
+    color:  '#263238'
+  },
+},
+subtitle: {
+  text: "of total cases",
+  align: 'center',
+  margin: 10,
+  offsetX: 0,
+  offsetY: 75,
+  floating: true,
+  style: {
+    fontSize:  '12px',
+    fontWeight:  'normal',
+    fontFamily:  undefined,
+    color:  '#9699a2'
+  },
+}
+    };
+    
+    return(
+      <div className="row align-items-center no-gutters" style={{height:"100%"}}>
+        <div className="col-lg-6 col-md-6">
+        <Chart options={options} series={series} type="donut" width="100%" height="150px"/>
+        </div>
+        <div className="col-lg-6 col-md-6 text-center">
+          <p className="charTitle"><strong>Recovery rate</strong></p>
+        </div>
+
+      </div>
+    )
+  }
+
   render(){
     return(
         <div >
