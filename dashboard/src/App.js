@@ -10,6 +10,12 @@ import FlagIcon from './flagIcon';
 
 import Chart from "react-apexcharts";
 class App extends Component{
+  constructor (props){
+    super(props);
+    this.state={
+      fourteenDaySelection:0
+    }
+  }
   renderNav =()=>{
     return(
 
@@ -212,13 +218,228 @@ class App extends Component{
     </div>
     )
   }
-  renderThirdLargeCard = () =>{
+  renderArea =()=>{
+    let series = [{
+      name: "confirmed cases",
+      data: [44, 55, 41, 67, 22, 43, 55, 41, 67, 22, 43,43,43,43]
+    },
+    {
+      name: "recovered",
+      data: [13, 23, 20, 8, 13, 27,13, 23, 20, 8, 13, 27,27,27,27]
+    },
+    {
+      name: "death",
+      data: [0,0,0,0,0,0,0,0,0]
+    }
+
+  ];
+let Options = {
+  
+  chart: {
+
+
+    stacked: true,
+    toolbar: {
+      show: false
+    },
+
+  },
+
+  plotOptions: {
+    bar: {
+      horizontal: false
+    }
+  },
+  xaxis: {
+    type: "category",
+    categories: [
+      "01/2011",
+      "02/2011",
+      "03/2011",
+      "04/2011",
+      "05/2011",
+      "06/2011",
+      "07/2011",
+      "08/2011",
+      "09/2011",
+      "10/2011",
+    ]
+  },
+  yaxis:{
+    opposite:true
+  },
+  legend: {
+    position: "bottom",
+  },
+  fill: {
+    opacity: 1
+  },
+  colors:["rgba(0,143,251,0.85)","rgba(0,227,150,0.85)","rgba(254,176,25,0.85)"],
+
+  grid:{
+      show:false
+  }
+};
+return(
+  <Chart series={series} options={Options} width="100%"height="280" type="area"/>
+)
+}
+  renderLine =(type)=>{
+    let series = [{
+      name: "confirmed cases",
+      data: [44, 55, 41, 67, 22, 43, 55, 41, 67, 22, 43,43,43,43]
+    },
+    {
+      name: "recovered",
+      data: [13, 23, 20, 8, 13, 27,13, 23, 20, 8, 13, 27,27,27,27]
+    },
+    {
+      name: "death",
+      data: [0,0,0,0,0,0,0,0,0]
+    }
+
+  ];
+let Options = {
+  
+  chart: {
+
+
+    stacked: true,
+    toolbar: {
+      show: false
+    },
+
+  },
+
+  plotOptions: {
+    bar: {
+      horizontal: false
+    }
+  },
+  xaxis: {
+    type: "category",
+    categories: [
+      "01/2011",
+      "02/2011",
+      "03/2011",
+      "04/2011",
+      "05/2011",
+      "06/2011",
+      "07/2011",
+      "08/2011",
+      "09/2011",
+      "10/2011",
+    ]
+  },
+  yaxis:{
+    opposite:true
+  },
+  legend: {
+    position: "bottom",
+  },
+  fill: {
+    opacity: 1
+  },
+  colors:["rgba(0,143,251,0.85)","rgba(0,227,150,0.85)","rgba(254,176,25,0.85)"],
+
+  grid:{
+      show:false
+  }
+};
+return(
+  <Chart series={series} options={Options} width="100%"height="280" type="line"/>
+)
+}
+  renderBars = () => {
+    let series = [{
+          name: "confirmed cases",
+          data: [44, 55, 41, 67, 22, 43, 55, 41, 67, 22, 43,43,43,43]
+        },
+        {
+          name: "recovered",
+          data: [13, 23, 20, 8, 13, 27,13, 23, 20, 8, 13, 27,27,27,27]
+        },
+        {
+          name: "death",
+          data: [0,0,0,0,0,0,0,0,0]
+        }
+
+      ];
+    let Options = {
+      
+      chart: {
+        type: "bar",
+
+        stacked: true,
+        toolbar: {
+          show: false
+        },
+
+      },
+
+      plotOptions: {
+        bar: {
+          horizontal: false
+        }
+      },
+      xaxis: {
+        type: "category",
+        categories: [
+          "01/2011",
+          "02/2011",
+          "03/2011",
+          "04/2011",
+          "05/2011",
+          "06/2011",
+          "07/2011",
+          "08/2011",
+          "09/2011",
+          "10/2011",
+        ]
+      },
+      yaxis:{
+        opposite:true
+      },
+      legend: {
+        position: "bottom",
+      },
+      fill: {
+        opacity: 1
+      },
+      colors:["rgba(0,143,251,0.85)","rgba(0,227,150,0.85)","rgba(254,176,25,0.85)"],
+
+      grid:{
+          show:false
+      }
+    };
     return(
+      <Chart series={series} options={Options} width="100%"height="280" type="bar"/>
+    )
+  }
+  renderThirdLargeCard = () =>{
+    let {fourteenDaySelection}=this.state;
+    return(
+      
       <div className="row">
         <div className="col nb-10 paddingHorizontal5">
           <div className="card">
             <div className="card-body">
-
+            <div className="dropdown">
+  <button className="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+  {fourteenDaySelection ===0 &&"Bar Chart"}
+              {fourteenDaySelection ===1 &&"Area Chart"}
+              {fourteenDaySelection ===2 &&"Bar Chart"}
+  </button>
+  <ul className="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+    <li><a className="dropdown-item" onClick={()=>this.setState({fourteenDaySelection:0})}>Bar</a></li>
+    <li><a className="dropdown-item" onClick={()=>this.setState({fourteenDaySelection:1})}>Aria</a></li>
+    <li><a className="dropdown-item" onClick={()=>this.setState({fourteenDaySelection:2})}>Line</a></li>
+  </ul>
+</div>
+              <h5><strong>Past 14 day chart</strong></h5>
+              {fourteenDaySelection ===0 &&this.renderBars()}
+              {fourteenDaySelection ===1 &&this.renderArea()}
+              {fourteenDaySelection ===2 &&this.renderLine()}
             </div>
           </div>
         </div>
