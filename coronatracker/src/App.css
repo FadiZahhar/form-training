@@ -40,3 +40,37 @@
 .padding-10 {
   padding: 10px;
 }
+
+.mb-10 {
+  margin-bottom: 10px;
+}
+.paddingHorizontal5 {
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+.fb {
+  color: #305998;
+}
+.twitter {
+  color: #00acee;
+}
+
+.txtGreen {
+  color: green;
+}
+.txtRed {
+  color: red;
+}
+.txtGray {
+  color: gray;
+}
+.upMargin15 {
+  margin-top: 15px;
+}
+.subtitle {
+  font-size: 13px;
+}
+.bolded {
+  font-weight: bold;
+}
