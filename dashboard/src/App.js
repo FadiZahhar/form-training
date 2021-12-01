@@ -100,32 +100,112 @@ class App extends Component{
            
     )
   }
-  //renderSecondThreeCardBG =()=>{
-   // return(
+  renderSecondThreeCardBG =(title,number,paragraphe)=>{
+    let options={
+      chart:{
+        toolbar:{
+          show:false,
+        },
+        zoom: {
+          enabled: false,
+        }
 
-   // )
-  //}
+      },
+      xaxis:{
+        labels:{
+          show:false,
+          minHeight: 0,
+          maxHeight: 0,
+        }
+      },
+      yaxis:{
+        labels:{
+          show:false,
+          minHeight: 0,
+          maxHeight: 0,
+        }
+      },
+      grid: {
+        show: false,
+      },
+      markers: {
+        size: 0,
+      },
+      stroke: {
+        show: true,
+        curve: 'smooth',
+      
+    },
+    dataLabels: {
+      enabled: false,
+    },
+    states: {
+      normal: {
+          filter: {
+              type: 'none',
+              value: 0,
+          }
+      },
+      hover: {
+          filter: {
+              type: 'lighten',
+              value: 0.15,
+          }
+      },
+      active: {
+          
+          filter: {
+              type: 'darken',
+              value: 0.35,
+          }
+      },
+  },
+  tooltip: {
+    enabled: false,
+  }
+
+
+
+    };
+    let series=[{data:[0, 30, 40, 60 , 70, 30,90,120,130,180 ]}];
+    return(
+        <div>
+          <p style={{position:"absolute",top:15,left:15}}><strong>{title}</strong></p>
+          <p style={{position:"absolute",top:55,left:15,fontSize:25}}><strong>{number}</strong></p>
+            {paragraphe}
+            <Chart
+    options={options}
+    series={series}
+    type="area"
+    width="100%"
+    height="100%"
+    style={{position:"relative",right:-10,bottom:-5}}
+  />
+
+        </div>
+    )
+  }
   renderSecondThreeCard = () =>{
     return(
       <div className="row">
       <div className="col-lg-4 col-md-4 col-sm-6 col-xs-12 nb-10 paddingHorizontal5">
         <div className="card">
-          <div className="card-body">
-            
+          <div className="card-body" style={{padding:0}}>
+            {this.renderSecondThreeCardBG("critical cases treated in ICU",5,<p style={{position:"absolute",bottom:15,left:15,zIndex:9999,color:'#4a5568'}}><span style={{color: "red"}}>0.1%</span> of total cases</p>)}
           </div>
         </div>
       </div>
       <div className="col-lg-4 col-md-4 col-sm-6 col-xs-12 nb-10 paddingHorizontal5">
         <div className="card">
-          <div className="card-body">
-
+          <div className="card-body"style={{padding:0}}>
+          {this.renderSecondThreeCardBG("Daily cases receving treatments",1531,<p style={{position:"absolute",bottom:15,left:15,zIndex:9999}}><span style={{color: "red"}}>18.4%</span> of total cases</p>)}
           </div>
         </div>
       </div>
       <div className="col-lg-4 col-md-4 col-sm-6 col-xs-12 nb-10 paddingHorizontal5">
         <div className="card">
-          <div className="card-body">
-
+          <div className="card-body"style={{padding:0}}>
+          {this.renderSecondThreeCardBG("Daily confirmed cases",257,<p style={{position:"absolute",bottom:15,left:15,zIndex:9999}}>Per Millin population</p>)}
           </div>
         </div>
       </div>
