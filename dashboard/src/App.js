@@ -9,6 +9,9 @@ import FlagIcon from './flagIcon';
 
 
 import Chart from "react-apexcharts";
+
+import Card from "./components/card/card"
+
 class App extends Component{
   constructor (props){
     super(props);
@@ -78,29 +81,20 @@ class App extends Component{
                       
               <div className="row">
                 <div className="col-lg-6 col-md-8 col-sm-12 col-xs-12 nb-10 paddingHorizontal5 ">
-                  <div className="card">
-                    <div className="card-body">
-                      {this.renderOverview()}
+                  <Card>                      
+                    {this.renderOverview()}
                       {this.renderStats()}
-                    </div>
-                  </div>
+                    </Card>
                 </div>
                 <div className="col-lg-3 col-md-2 col-sm-6 col-xs-12 nb-10 paddingHorizontal5">
-                  <div className="card " style={{height:"100%"}}>
-                    <div className="card-body" style={{padding:0}}>
-                      {this.renderFatalityCard()}
-                      
-                     
-                    </div>
-                  </div>
+                  <Card card={{height:"100%"}} cardbody={{padding:0}}>
+                    {this.renderFatalityCard()}
+                    </Card>
                 </div>
                 <div className="col-lg-3 col-md-2 col-sm-6 col-xs-12  nb-10 paddingHorizontal5">
-                  <div className="card" style={{height:"100%"}}>
-                    <div className="card-body" >
-                      {this.renderRecoveryCard()}
-                      
-                    </div>
-                  </div>
+                <Card card={{height:"100%"}} cardbody={{}}>
+                    {this.renderRecoveryCard()}
+                    </Card>
                 </div>
               </div>
            
@@ -195,25 +189,19 @@ class App extends Component{
     return(
       <div className="row">
       <div className="col-lg-4 col-md-4 col-sm-6 col-xs-12 nb-10 paddingHorizontal5">
-        <div className="card">
-          <div className="card-body" style={{padding:0}}>
+      <Card card={{}} cardbody={{padding:0}}>
             {this.renderSecondThreeCardBG("critical cases treated in ICU",5,<p style={{position:"absolute",bottom:15,left:15,zIndex:9999,color:'#4a5568'}}><span style={{color: "red"}}>0.1%</span> of total cases</p>)}
-          </div>
-        </div>
+        </Card>
       </div>
       <div className="col-lg-4 col-md-4 col-sm-6 col-xs-12 nb-10 paddingHorizontal5">
-        <div className="card">
-          <div className="card-body"style={{padding:0}}>
-          {this.renderSecondThreeCardBG("Daily cases receving treatments",1531,<p style={{position:"absolute",bottom:15,left:15,zIndex:9999}}><span style={{color: "red"}}>18.4%</span> of total cases</p>)}
-          </div>
-        </div>
+      <Card card={{}} cardbody={{padding:0}}>
+        {this.renderSecondThreeCardBG("Daily cases receving treatments",1531,<p style={{position:"absolute",bottom:15,left:15,zIndex:9999}}><span style={{color: "red"}}>18.4%</span> of total cases</p>)}
+      </Card>
       </div>
       <div className="col-lg-4 col-md-4 col-sm-6 col-xs-12 nb-10 paddingHorizontal5">
-        <div className="card">
-          <div className="card-body"style={{padding:0}}>
-          {this.renderSecondThreeCardBG("Daily confirmed cases",257,<p style={{position:"absolute",bottom:15,left:15,zIndex:9999}}>Per Millin population</p>)}
-          </div>
-        </div>
+      <Card card={{}} cardbody={{padding:0}}>
+      {this.renderSecondThreeCardBG("Daily confirmed cases",257,<p style={{position:"absolute",bottom:15,left:15,zIndex:9999}}>Per Millin population</p>)}
+      </Card>
       </div>
     </div>
     )
@@ -422,9 +410,8 @@ return(
       
       <div className="row">
         <div className="col nb-10 paddingHorizontal5">
-          <div className="card">
-            <div className="card-body">
-            <div className="dropdown">
+          <Card>
+          <div className="dropdown">
   <button className="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
   {fourteenDaySelection ===0 &&"Bar Chart"}
               {fourteenDaySelection ===1 &&"Area Chart"}
@@ -440,8 +427,8 @@ return(
               {fourteenDaySelection ===0 &&this.renderBars()}
               {fourteenDaySelection ===1 &&this.renderArea()}
               {fourteenDaySelection ===2 &&this.renderLine()}
-            </div>
-          </div>
+            </Card>
+
         </div>
 
     </div>
