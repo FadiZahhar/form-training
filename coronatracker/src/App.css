@@ -77,3 +77,25 @@
 .chartTitle {
   font-size: 16px;
 }
+.show>.fourteenDaysDropdown,.fourteenDaysDropdown:hover,.btn-secondary.dropdown-toggle{
+  background-color:#edf2f7;
+  border:0;
+  color:#4a5568;
+}
+.fourteenDaysMenuItem{
+  margin-top:5px ;
+  /* width: 106.15px; */
+  min-width: 106.15px;
+  background-color:#edf2f7 ;
+  border-radius: 0px;
+  border: 0;
+  padding-top: 0;
+  /* padding-bottom: 0; */
+
+}
+
+.dropdown-item:hover{
+  cursor: pointer;
+  background-color: #cbd5e0;
+ 
+}

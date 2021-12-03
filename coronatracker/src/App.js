@@ -11,6 +11,15 @@ import Chart from "react-apexcharts";
 
 class App extends Component {
 
+  constructor(props) {
+    super(props);
+
+    // for fourteendays selection 0=bar chart, 1= aria chart and 2=line chart
+    this.state = {
+      fourteenDaysSelection: 0
+    }
+  }
+
   renderNabBar = () => {
     return (
       <nav className="navbar navbar-expand-lg navbar-light bg-light">
@@ -417,13 +426,96 @@ class App extends Component {
     )
   }
 
+
+  renderFourtenDaysChart = (type) => {
+    // stacked column chart
+
+    let series = [
+      {
+        name: 'Confirmed',
+        data: [44, 55, 41, 67, 22, 43, 44, 55, 41, 67, 22, 43, 43, 43]
+      }, {
+        name: 'Recoverd',
+        data: [13, 23, 20, 8, 13, 27, 26, 13, 23, 20, 8, 13, 27, 26]
+      },
+      {
+        name: 'Death',
+        data: [11, 17, 15, 15, 21, 14, 27, 11, 17, 15, 15, 21, 14, 27]
+      },
+    ]
+
+    let options = {
+      chart: {
+        stacked: type === "bar" ? true : false,
+        toolbar: {
+          show: false
+        },
+      },
+      dataLabels: {
+        enabled: false
+      },
+      plotOptions: {
+        bar: {
+          horizontal: false,
+        },
+      },
+      xaxis: {
+        type: 'category',
+        categories: ['01/21 ', '02/21 ', '03/21 ', '04/21 ',
+          '05/21 ', '06/21 ', '07/21 ', '08/21 ', '09/21 ', '10/21 ', '11/21 ', '12/21 ', '13/21 ', '14/21 '
+        ]
+      },
+      yaxis: {
+        opposite: true
+      },
+      legend: {
+        position: 'bottom',
+
+      },
+      fill: {
+        opacity: 1
+      },
+      colors: ['rgba(0,143,251,0.85)', 'rgba(0,227,150,0.85)', 'rgba(254,176,25,0.85)'],
+      grid: {
+        show: false
+      },
+      stroke: {
+        curve: "smooth"
+      }
+
+    };
+
+    return (
+      <Chart series={series} options={options} width="100%" height="340" type={type} />
+    )
+
+  }
+
   renderThirdLargeCard = () => {
+    let { fourteenDaysSelection } = this.state;
+
     return (
       <div className="row">
         <div className="col mb-10 paddingHorizontal5">
           <div className="card">
             <div className="card-body">
+              <h5> <strong>Past 14 Days Chart</strong> </h5>
+              <div className="dropdown">
+                <button className="btn btn-secondary dropdown-toggle fourteenDaysDropdown" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  <strong>{fourteenDaysSelection === 0 && "Bar Chart"}</strong>
+                  <strong>{fourteenDaysSelection === 1 && "Area Chart"}</strong>
+                  <strong>{fourteenDaysSelection === 2 && "Line Chart"}</strong>
 
+                </button>
+                <div className="dropdown-menu fourteenDaysMenuItem" aria-labelledby="dropdownMenuButton">
+                  <a className="dropdown-item fourteenDaysMenuItem" onClick={() => this.setState({ fourteenDaysSelection: 0 })} >Bar</a>
+                  <a className="dropdown-item fourteenDaysMenuItem" onClick={() => this.setState({ fourteenDaysSelection: 1 })}>Area</a>
+                  <a className="dropdown-item fourteenDaysMenuItem" onClick={() => this.setState({ fourteenDaysSelection: 2 })} >Line</a>
+                </div>
+              </div>
+              {fourteenDaysSelection === 0 && this.renderFourtenDaysChart("bar")}
+              {fourteenDaysSelection === 1 && this.renderFourtenDaysChart("area")}
+              {fourteenDaysSelection === 2 && this.renderFourtenDaysChart("line")}
             </div>
           </div>
         </div>
