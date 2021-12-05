@@ -8,6 +8,7 @@ import FlagIcon from "./flagIcon";
 
 //ApexCharts library
 import Chart from "react-apexcharts";
+import zIndex from '@mui/material/styles/zIndex';
 
 class App extends Component{
 
@@ -185,7 +186,7 @@ class App extends Component{
 
   renderRecoveryCard = () =>{
 
-    let series = [634994,675765];
+    let series = [40771,675765];
     let recoverPercent = series[0] / series[1] * 100;
 
 
@@ -256,7 +257,7 @@ class App extends Component{
       },
 
       title: {
-        text: recoverPercent.toFixed(1)+"%",
+        text: "94%",
         align: 'center',
         margin: 10,
         offsetX: 0,
@@ -330,29 +331,107 @@ class App extends Component{
     )
   }
 
+  renderSecondThreeCardsBG = (id, title, stat, description) =>{
+    //chart data
+    //return chart component, and also accept 3 parameters 
+    //do positioning on the data and the chart.
+
+    let options = {
+      chart: {
+        id: id,
+
+        toolbar: {
+          show: false
+        },
+
+        zoom: {
+          enabled: false
+        }
+      },
+
+      dataLabels: {
+        enabled: false
+      },
+
+      xaxis: {
+        labels:{
+          show: false,
+          minHeight: 0,
+          maxHeight: 0
+        }
+      },
+
+      yaxis: {
+        show: false,
+        labels: {
+          show: false,
+        }
+      },
+
+      grid: {
+        show: false
+      },
+
+      markers: {
+        size: 0
+      },
+
+      stroke: {
+        show: true,
+        curve: 'smooth',
+        colors:  ["rgb(0, 180, 251)"]
+      },
+
+      tooltip: {
+        enabled: false
+      },
+
+      fill: {
+        colors: ["rgb(0, 143, 251)"],
+        opacity: 0.9
+      }
+
+    };
+    let series = [
+      {
+        name: "series-1",
+        data: [0, 30, 40, 70, 30, 100, 50, 120, 130, 160]
+      }
+    ] 
+
+    return(
+      <div>
+        <p style={{position:"absolute", top: 15, left: 15}}><strong>{title}</strong></p>
+        <p style={{position:"absolute", top: 55, left: 15, fontSize: 25}}><strong>{stat}</strong></p>
+        <div style={{position: "absolute", bottom: 20, left: 15, zIndex: 1, color: "#4a5568"}}>{description}</div>
+        <Chart options={options} series={series} type="area" width="100%" height="100%" style={{position: "relative", right: -10, bottom: -5 }}/>
+      </div>
+    )
+  }
+
   renderSecondThreeCards = () =>{
     return(
       <div className="row">
         <div className="col-lg-4 col-md-4 col-sm-6 col-xs-12 mb-10 paddingHorizontal5">
           <div className="card">
-              <div className="card-body">
-                 
+              <div className="card-body" style={{padding: 0}}>
+                {this.renderSecondThreeCardsBG("cardcardOneInSecondSection", "Critical Cases treated in ICU", 168, <p><span style={{color: "red"}}>0.0%</span> of total cases</p>)}
               </div>
           </div>
         </div>
 
         <div className="col-lg-4 col-md-4 col-sm-6 col-xs-12 mb-10 paddingHorizontal5">
           <div className="card">
-              <div className="card-body">
-                 
+              <div className="card-body" style={{padding: 0}}>
+                {this.renderSecondThreeCardsBG("cardcardTwoInSecondSection", "Daily Cases Receiving Treatment", 35032, <p><span style={{color: "red"}}>5.2%</span> of total cases</p>)}
               </div>
           </div>
         </div>
 
         <div className="col-lg-4 col-md-4 col-sm-6 col-xs-12 mb-10 paddingHorizontal5">
           <div className="card">
-              <div className="card-body">
-                 
+              <div className="card-body" style={{padding: 0}}>
+                {this.renderSecondThreeCardsBG("cardcardThreeInSecondSection", "Daily Confirmed Cases", 100090, <p>Per Million Population</p>)}
               </div>
           </div>
         </div>
