@@ -6,6 +6,9 @@ import FacebookIcon from '@mui/icons-material/Facebook';
 import TwitterIcon from '@mui/icons-material/Twitter';
 import FlagIcon from "./flagIcon";
 
+//ApexCharts library
+import Chart from "react-apexcharts";
+
 class App extends Component{
 
   renderNavBar = () =>{
@@ -66,10 +69,240 @@ class App extends Component{
     )
   }
 
+  renderFatalityCard = () =>{
+
+    let series = [8755,675765];
+    let deadPercent = series[0] / series[1] * 100;
+    let options = {
+      legend:{
+        show:false
+      },
+
+      dataLabels:{
+        enabled:false
+      },
+
+      plotOptions:{
+        pie: {
+          startAngle: 0,
+          expandOnClick: false,
+          offsetX: 0,
+          offsetY: 0,
+          customScale: 1,
+          dataLabels: {
+            offset: 0,
+            minAngleToShowLabel: 10
+          },
+          donut: {
+            size: '85%',
+            background: 'transparent',
+            labels: {
+              show: false,
+            }
+          }
+        }
+      },
+
+      fill: {
+        colors: ['rgb(255, 154, 178)', 'rgb(204, 204, 204)']
+      },
+
+      tooltip: {
+        enabled: false
+      },
+
+      states: {
+        normal: {
+          filter: {
+            type: 'none',
+            value: 0,
+          }
+        },
+        hover: {
+          filter: {
+            type: 'none',
+            value: 0,
+          }
+        },
+        active: {
+          filter: {
+            type: 'none',
+            value: 0,
+          }
+        }
+      },
+
+      chart: {
+        selection: {
+          enabled: false,
+        },
+        offsetY: -10
+      },
+
+      title: {
+        text: deadPercent.toFixed(1)+"%",
+        align: 'center',
+        margin: 10,
+        offsetX: 0,
+        offsetY: 55,
+        floating: true,
+        style: {
+          fontSize:  '20px',
+          fontWeight:  300,
+          fontFamily:  'Arial',
+          color:  '#263238'
+        },
+      },
+
+      subtitle: {
+        text: "OF TOTAL CASES",
+        align: 'center',
+        margin: 10,
+        offsetX: 0,
+        offsetY: 85,
+        floating: true,
+        style: {
+          fontSize:  '9px',
+          fontWeight:  'normal',
+          fontFamily:  undefined,
+          color:  '#9699a2'
+        },
+      }
+
+    };
+
+    return(
+      <div className="row align-items-center no-gutters" style={{height: "100%"}}>
+        <div className="col-lg-6 col-md-6">
+          <Chart options={options} series={series} type="donut" width="100%" height="150px" />
+        </div>
+        <div className="col-lg-6 col-md-6 text-center">
+          <p style={{fontSize: 14}}><strong>Fatality Rate</strong></p>
+        </div>
+      </div>
+    )
+  }
+
+  renderRecoveryCard = () =>{
+
+    let series = [634994,675765];
+    let recoverPercent = series[0] / series[1] * 100;
+
+
+    let options = {
+      legend:{
+        show:false
+      },
+
+      dataLabels:{
+        enabled:false
+      },
+
+      plotOptions:{
+        pie: {
+          startAngle: 0,
+          expandOnClick: false,
+          offsetX: 0,
+          offsetY: 0,
+          customScale: 1,
+          dataLabels: {
+            offset: 0,
+            minAngleToShowLabel: 10
+          },
+          donut: {
+            size: '85%',
+            background: 'transparent',
+            labels: {
+              show: false,
+            }
+          }
+        }
+      },
+
+      fill: {
+        colors: ['rgb(204, 204, 204)', 'rgb(77, 175, 247)']
+      },
+
+      tooltip: {
+        enabled: false
+      },
+
+      states: {
+        normal: {
+          filter: {
+            type: 'none',
+            value: 0,
+          }
+        },
+        hover: {
+          filter: {
+            type: 'none',
+            value: 0,
+          }
+        },
+        active: {
+          filter: {
+            type: 'none',
+            value: 0,
+          }
+        }
+      },
+
+      chart: {
+        selection: {
+          enabled: false,
+        },
+        offsetY: -10
+      },
+
+      title: {
+        text: recoverPercent.toFixed(1)+"%",
+        align: 'center',
+        margin: 10,
+        offsetX: 0,
+        offsetY: 55,
+        floating: true,
+        style: {
+          fontSize:  '20px',
+          fontWeight:  300,
+          fontFamily:  'Arial',
+          color:  '#263238'
+        },
+      },
+
+      subtitle: {
+        text: "OF TOTAL CASES",
+        align: 'center',
+        margin: 10,
+        offsetX: 0,
+        offsetY: 85,
+        floating: true,
+        style: {
+          fontSize:  '9px',
+          fontWeight:  'normal',
+          fontFamily:  undefined,
+          color:  '#9699a2'
+        },
+      }
+
+    };
+
+    return(
+      <div className="row align-items-center no-gutters" style={{height: "100%"}}>
+        <div className="col-lg-6 col-md-6">
+          <Chart options={options} series={series} type="donut" width="100%" height="150px" />
+        </div>
+        <div className="col-lg-6 col-md-6 text-center">
+          <p style={{fontSize: 14}}><strong>Recovery Rate</strong></p>
+        </div>
+      </div>
+    )
+  }
+
   renderFirstThreeCards = () =>{
     return(
       <div className="row">
-        <div className="col-lg-8 col-md-8 col-sm-12 col-xs-12 mb-10 paddingHorizontal5">
+        <div className="col-lg-6 col-md-6 col-sm-12 col-xs-12 mb-10 paddingHorizontal5">
           <div className="card">
               <div className="card-body">
                  {this.renderOverView()}
@@ -78,18 +311,18 @@ class App extends Component{
           </div>
         </div>
 
-        <div className="col-lg-2 col-md-2 col-sm-6 col-xs-12 mb-10 paddingHorizontal5">
-          <div className="card">
-              <div className="card-body">
-                 
+        <div className="col-lg-3 col-md-3 col-sm-6 col-xs-12 mb-10 paddingHorizontal5">
+          <div className="card" style={{height: "100%"}}>
+              <div className="card-body" style={{padding:0}}>
+                {this.renderFatalityCard()}
               </div>
           </div>
         </div>
 
-        <div className="col-lg-2 col-md-2 col-sm-6 col-xs-12 mb-10 paddingHorizontal5">
-          <div className="card">
-              <div className="card-body">
-                  
+        <div className="col-lg-3 col-md-3 col-sm-6 col-xs-12 mb-10 paddingHorizontal5">
+          <div className="card" style={{height: "100%"}}>
+              <div className="card-body" style={{padding:0}}>
+                {this.renderRecoveryCard()}
               </div>
           </div>
         </div>
