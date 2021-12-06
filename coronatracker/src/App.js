@@ -18,7 +18,7 @@ class App extends Component {
         <Routes>
           <Route path="/" >
             <Route index element={<Home />} />
-            <Route path="dashboard" element={<Home />} />
+            <Route path="home" element={<Home />} />
             <Route path="country" element={<Country />} />
           </Route>
         </Routes>
