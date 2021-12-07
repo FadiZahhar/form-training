@@ -12,17 +12,25 @@ import Chart from "react-apexcharts";
 import Card from "../card/card"
 import Navbar from '../shared/navbar/navbar';
 
+import { Routes, Route, useParams } from "react-router-dom";
+
 class Country extends Component {
     constructor(props) {
         super(props);
 
+        console.log(props)
         // for fourteendays selection 0=bar chart, 1= aria chart and 2=line chart
         this.state = {
             fourteenDaysSelection: 0
         }
     }
+    // componentDidMount() {
+    //     this.fetchCountry()
+    // }
 
-
+    // fetchCountry = async () => {
+    //     let { match }
+    // }
     renderOverView = () => {
         return (
             <div className="row">

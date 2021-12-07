@@ -5,6 +5,7 @@ import axios from 'axios';
 
 import FlagIcon from '../../flagIcon';
 
+import { Link } from "react-router-dom";
 class Home extends Component {
     constructor(props) {
         super(props);
@@ -47,7 +48,7 @@ class Home extends Component {
                 else {
                     alert("Something happen please refresh")
                 }
-                console.log(response)
+                // console.log(response)
             });
     }
     renderCountries = () => {
@@ -56,7 +57,7 @@ class Home extends Component {
 
             return (
                 <tr key={index}>
-                    <td>{item.countryCode && item.countryCode != "ot" && item.countryCode != "xk" && < FlagIcon code={item.countryCode} />} {item.countryName}</td>
+                    <td> <Link to={"/country/" + item.countryCode}>{item.countryCode && item.countryCode != "ot" && item.countryCode != "xk" && < FlagIcon code={item.countryCode} />} {item.countryName}</Link> </td>
                     <td>{item.confirm}</td>
                     <td>{item.recovered}</td>
                     <td>{item.deaths}</td>

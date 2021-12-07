@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import './App.css';
-import { Routes, Route, Outlet, Link } from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import Home from './components/home/home';
 import Country from './components/country/country';
 
@@ -15,14 +15,19 @@ class App extends Component {
   render() {
     return (
       <>
-        <Routes>
-          <Route path="/" >
-            <Route index element={<Home />} />
-            <Route path="home" element={<Home />} />
-            <Route path="country" element={<Country />} />
-          </Route>
-        </Routes>
+        <Router>
+          <Switch>
+            <Route exact path="/">
+              <Home />
+            </Route>
+            <Route path="/home">
+              <Home />
+            </Route>
+            <Route path="/country/:id" component={Country} />
 
+
+          </Switch>
+        </Router>
       </>
     )
   }
