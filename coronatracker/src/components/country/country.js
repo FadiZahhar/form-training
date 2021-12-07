@@ -12,30 +12,85 @@ import Chart from "react-apexcharts";
 import Card from "../card/card"
 import Navbar from '../shared/navbar/navbar';
 
-import { Routes, Route, useParams } from "react-router-dom";
+// Axios 
+import axios from 'axios';
 
 class Country extends Component {
     constructor(props) {
         super(props);
 
-        console.log(props)
         // for fourteendays selection 0=bar chart, 1= aria chart and 2=line chart
         this.state = {
-            fourteenDaysSelection: 0
+            fourteenDaysSelection: 0,
+            // we added default country so not be null and lead to errors
+            country: { countryCode: "lb", country: "Lebanon", totalDeaths: 0, totalConfirmed: 0, totalRecovered: 0, totalCritical: 0, activeCases: 0 },
+            fourteenDays: []
+
         }
     }
-    // componentDidMount() {
-    //     this.fetchCountry()
-    // }
+    componentDidMount() {
+        this.fetchCountry()
+        this.fetchFourteenDays()
+    }
 
-    // fetchCountry = async () => {
-    //     let { match }
-    // }
+    fetchCountry = async () => {
+        let { match } = this.props;
+        let countryCode = match.params.id;
+
+
+        let url = "https://api.coronatracker.com/v3/stats/worldometer/country?countryCode=" + countryCode
+
+        axios({
+            method: 'get',
+            url: url,
+        })
+            .then((response) => {
+                if (response.status === 200 || response.status === 201) {
+                    let country = response.data[0]
+                    this.setState({
+                        country
+                    })
+                }
+                else {
+                    alert("Something happen please refresh")
+                }
+
+            });
+    }
+    fetchFourteenDays = async () => {
+        let { match } = this.props;
+        let countryCode = match.params.id;
+        var fortnightBefore = new Date(Date.now() - 12096e5)
+        let startDate = fortnightBefore.getFullYear() + "-" + ((fortnightBefore.getMonth() + 1) > 10 ? ((fortnightBefore.getMonth() + 1)) : ("0" + (fortnightBefore.getMonth() + 1))) + "-" + ((fortnightBefore.getDate() + 1) > 10 ? ((fortnightBefore.getDate() + 1)) : ("0" + (fortnightBefore.getDate() + 1)))
+        let d = new Date();
+        let endDateObj = d.setDate(d.getDate() - 1);
+        endDateObj = new Date()
+        let endDate = endDateObj.getFullYear() + "-" + ((endDateObj.getMonth() + 1) > 10 ? ((endDateObj.getMonth() + 1)) : ("0" + (endDateObj.getMonth() + 1))) + "-" + ((endDateObj.getDate() + 1) > 10 ? ((endDateObj.getDate() + 1)) : ("0" + (endDateObj.getDate() + 1)))
+
+        let url = "https://api.coronatracker.com/v5/analytics/trend/country?countryCode=" + countryCode + "&startDate=" + startDate + "&endDate=" + endDate
+
+        axios({
+            method: 'get',
+            url: url,
+        })
+            .then((response) => {
+                if (response.status === 200 || response.status === 201) {
+                    this.setState({
+                        fourteenDays: response.data
+                    })
+                }
+                else {
+                    alert("Something happen please refresh")
+                }
+
+            });
+    }
     renderOverView = () => {
+        let { country } = this.state;
         return (
             <div className="row">
                 <div className="col-auto mr-auto">
-                    <h6><strong> <FlagIcon code={"lb"} /> Lebanon Overview</strong></h6>
+                    <h6><strong> <FlagIcon code={country.countryCode.toLowerCase()} /> {country.country}</strong></h6>
                 </div>
                 <div className="col-auto">
                     <h6>Share: <FacebookIcon className="fb" /> <TwitterIcon className="twitter" /> </h6>
@@ -44,29 +99,32 @@ class Country extends Component {
         )
     }
     renderStats = () => {
+        let { country } = this.state;
         return (
             <div className="row text-center">
                 <div className="col-4">
-                    <h4 className="txtRed">670,656</h4>
+                    <h4 className="txtRed">{country.totalConfirmed}</h4>
                     <p className="txtGray bolded">Confirmed</p>
-                    <p className="subtitle txtRed upMargin15">+50 new cases</p>
+                    <p className="subtitle txtRed upMargin15">+{country.dailyConfirmed} new cases</p>
                 </div>
                 <div className="col-4">
-                    <h4 className="txtGreen">633,299</h4>
+                    <h4 className="txtGreen">{country.totalRecovered}</h4>
                     <p className="txtGray bolded">Recovered</p>
                 </div>
                 <div className="col-4">
-                    <h4 className="txtGray">8,725</h4>
+                    <h4 className="txtGray">{country.totalDeaths}</h4>
                     <p className="txtGray bolded">Dead</p>
-                    <p className="subtitle txtRed upMargin15">+0 new deaths</p>
+                    <p className="subtitle txtRed upMargin15">+{country.dailyDeaths} new deaths</p>
                 </div>
             </div>
         )
     }
 
     renderFatalityCard = () => {
-        let series = [8725, 670656];
-        let deadPercent = 8725 / series[1] * 100;
+        let { country } = this.state;
+
+        let series = [country.totalDeaths, country.totalConfirmed];
+        let deadPercent = country.totalDeaths / series[1] * 100;
         let options = {
             legend: {
                 show: false
@@ -172,8 +230,10 @@ class Country extends Component {
     }
 
     renderRecoveryCard = () => {
-        let series = [37357, 670656];
-        let recoverPercent = series[0] / series[1] * 100;
+        let { country } = this.state;
+
+        let series = [country.totalConfirmed - country.totalRecovered, country.totalConfirmed];
+        let recoverPercent = country.totalRecovered / series[1] * 100;
         let options = {
             legend: {
                 show: false
@@ -383,22 +443,24 @@ class Country extends Component {
     }
 
     renderSecondThreeCards = () => {
-
+        let { country } = this.state;
+        let icuPercentage = country.totalCritical / country.totalConfirmed * 100;
+        let activeCasesPercentage = country.activeCases / country.totalConfirmed * 100;
         return (
             <div className="row">
                 <div className="col-lg-4 col-md-4 col-sm-6 col-xs-12 mb-10 paddingHorizontal5">
                     <Card cardBody={{ padding: 0 }}>
-                        {this.renderSecondThreeCardsBG("cardOneInSecondSection", "Critical Cases Treated in ICU", 5, <p style={{ position: "absolute", bottom: 15, left: 15, zIndex: 999, color: "#4a5568" }}><span style={{ color: "red" }}>0.1%</span>of total cases</p>)}
+                        {this.renderSecondThreeCardsBG("cardOneInSecondSection", "Critical Cases Treated in ICU", country.totalCritical, <p style={{ position: "absolute", bottom: 15, left: 15, zIndex: 999, color: "#4a5568" }}><span style={{ color: "red" }}>{icuPercentage.toFixed(1)}%</span>of total cases</p>)}
                     </Card>
                 </div>
                 <div className="col-lg-4 col-md-4 col-sm-6 col-xs-12 mb-10 paddingHorizontal5">
                     <Card cardBody={{ padding: 0 }}>
-                        {this.renderSecondThreeCardsBG("cardTwoInSecondSection", "Daily Cases Receiving Treatments", 1531, <p style={{ position: "absolute", bottom: 15, left: 15, zIndex: 999, color: "#4a5568" }}><span style={{ color: "red" }}>18.4%</span>of total cases</p>)}
+                        {this.renderSecondThreeCardsBG("cardTwoInSecondSection", "Daily Cases Receiving Treatments", country.activeCases, <p style={{ position: "absolute", bottom: 15, left: 15, zIndex: 999, color: "#4a5568" }}><span style={{ color: "red" }}>{activeCasesPercentage.toFixed(1)}%</span>of total cases</p>)}
                     </Card>
                 </div>
                 <div className="col-lg-4 col-md-4 col-sm-6 col-xs-12 mb-10 paddingHorizontal5">
                     <Card cardBody={{ padding: 0 }}>
-                        {this.renderSecondThreeCardsBG("cardThreeInSecondSection", "Daily Confirm Cases", 257, <p style={{ position: "absolute", bottom: 15, left: 15, zIndex: 999, color: "#4a5568" }}>Per Million Population</p>)}
+                        {this.renderSecondThreeCardsBG("cardThreeInSecondSection", "Daily Confirm Cases", country.totalConfirmedPerMillionPopulation, <p style={{ position: "absolute", bottom: 15, left: 15, zIndex: 999, color: "#4a5568" }}>Per Million Population</p>)}
                     </Card>
                 </div>
             </div >
@@ -407,19 +469,32 @@ class Country extends Component {
 
 
     renderFourtenDaysChart = (type) => {
-        // stacked column chart
+        let { fourteenDays } = this.state;
+        let confirmArray = [];
+        let recoveredArray = [];
+        let deathArray = []
+        let dateArray = []
+
+        fourteenDays.map((item, index) => {
+            confirmArray.push(item.total_confirmed)
+            recoveredArray.push(item.total_recovered)
+            deathArray.push(item.total_deaths)
+            let date = new Date(item.last_updated)
+            let formateDate = (date.getUTCMonth() + 1) + "/" + date.getUTCDate()
+            dateArray.push(formateDate)
+        })
 
         let series = [
             {
                 name: 'Confirmed',
-                data: [44, 55, 41, 67, 22, 43, 44, 55, 41, 67, 22, 43, 43, 43]
+                data: confirmArray
             }, {
                 name: 'Recoverd',
-                data: [13, 23, 20, 8, 13, 27, 26, 13, 23, 20, 8, 13, 27, 26]
+                data: recoveredArray
             },
             {
                 name: 'Death',
-                data: [11, 17, 15, 15, 21, 14, 27, 11, 17, 15, 15, 21, 14, 27]
+                data: deathArray
             },
         ]
 
@@ -440,9 +515,7 @@ class Country extends Component {
             },
             xaxis: {
                 type: 'category',
-                categories: ['01/21 ', '02/21 ', '03/21 ', '04/21 ',
-                    '05/21 ', '06/21 ', '07/21 ', '08/21 ', '09/21 ', '10/21 ', '11/21 ', '12/21 ', '13/21 ', '14/21 '
-                ]
+                categories: dateArray
             },
             yaxis: {
                 opposite: true
