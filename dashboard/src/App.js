@@ -7,7 +7,7 @@ import Country from "./components/country/country";
 
 //new form for react-router-dom 
 // Switch to Routes 
-import { BrowserRouter, Routes , Route } from 'react-router-dom'
+import { BrowserRouter, Routes , Route, useParams } from 'react-router-dom'
 
 
 
@@ -15,6 +15,8 @@ class App extends Component{
   constructor (props){
     super(props);
   }
+
+
   render () {
     return (
       <BrowserRouter>
@@ -23,9 +25,9 @@ class App extends Component{
         <Route path="/" element={<Home/>}>
       
         </Route>
-        <Route path="/Country" element={<Country/>}>
-          
-        </Route>
+        
+        <Route path="country/:id" element={<Country/>}/>
+
         <Route path="/dashboard" element={<Home/>}>
           
         </Route>
