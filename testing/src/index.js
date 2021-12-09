@@ -9,7 +9,7 @@ import App from 'components/App'
 ReactDOM.render(
     // createStore take 2 arguments reducers and initial state
     <Provider store={createStore(reducers, {})}>
-        <App />,
+        <App />
     </Provider>,
 
     document.querySelector('#root')
