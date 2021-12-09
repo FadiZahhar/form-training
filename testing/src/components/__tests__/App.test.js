@@ -16,39 +16,46 @@ import App from 'components/App'
 import CommentBox from 'components/CommentBox'
 import CommentList from 'components/CommentList'
 
-it('shows a comment box', () => {
 
+// Common Setup logic
+
+let wrapped;
+
+beforeEach(() => {
     // shallow renders just the component without the children 
-    const wrapped = shallow(<App />);
+    wrapped = shallow(<App />);
+})
 
+it('shows a comment box', () => {
     expect(wrapped.find(CommentBox).length).toEqual(1)
-
-    // // their is no div inside the browser, no chrome/firefox.. here so its a fake div
-    // const div = document.createElement('div')
-
-    // // react will take the App component =>takes the html produced by this component and stick it to the div element
-    // ReactDOM.render(<App />, div)
-
-    // // Looks inside the div
-    // // and checks to see if the CommentBox is in there
-
-    // // this way is Limiting test Knowledge not recommended
-    // // expect(div.innerHTML).toContain('Comment Box')
-
-    // // better way by using Enzyme open source package 
-    // // made for testing to be a little bit easier
-
-
-    // // this is like a cleanup ,
-    // // it will found the app component that we rendered
-    // // and it will remove it
-    // ReactDOM.unmountComponentAtNode(div)
 })
 
 it('shows a comment List', () => {
-
-    // shallow renders just the component without the children 
-    const wrapped = shallow(<App />);
-
     expect(wrapped.find(CommentList).length).toEqual(1)
 })
+
+// old way 
+
+// it('shows a comment box', () => {
+
+//     // // their is no div inside the browser, no chrome/firefox.. here so its a fake div
+//     // const div = document.createElement('div')
+
+//     // // react will take the App component =>takes the html produced by this component and stick it to the div element
+//     // ReactDOM.render(<App />, div)
+
+//     // // Looks inside the div
+//     // // and checks to see if the CommentBox is in there
+
+//     // // this way is Limiting test Knowledge not recommended
+//     // // expect(div.innerHTML).toContain('Comment Box')
+
+//     // // better way by using Enzyme open source package 
+//     // // made for testing to be a little bit easier
+
+
+//     // // this is like a cleanup ,
+//     // // it will found the app component that we rendered
+//     // // and it will remove it
+//     // ReactDOM.unmountComponentAtNode(div)
+// })
