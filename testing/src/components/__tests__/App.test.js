@@ -10,29 +10,44 @@
  * JSDOM stimulates how browser works
  */
 import React from 'react'
-import ReactDOM from 'react-dom'
+// import ReactDOM from 'react-dom'
+import { shallow } from 'enzyme'
 import App from '../App'
 import CommentBox from '../CommentBox'
 
 it('shows a comment box', () => {
-    // their is no div inside the browser, no chrome/firefox.. here so its a fake div
-    const div = document.createElement('div')
 
-    // react will take the App component =>takes the html produced by this component and stick it to the div element
-    ReactDOM.render(<App />, div)
+    // shallow renders just the component without the children 
+    const wrapped = shallow(<App />);
 
-    // Looks inside the div
-    // and checks to see if the CommentBox is in there
-
-    // this way is Limiting test Knowledge not recommended
-    // expect(div.innerHTML).toContain('Comment Box')
-
-    // better way by using Enzyme open source package 
-    // made for testing to be a little bit easier
+    expect(wrapped.find(CommentBox).length).toEqual(1)
 
 
-    // this is like a cleanup ,
-    // it will found the app component that we rendered
-    // and it will remove it
-    ReactDOM.unmountComponentAtNode(div)
+
+
+
+
+
+
+
+    // // their is no div inside the browser, no chrome/firefox.. here so its a fake div
+    // const div = document.createElement('div')
+
+    // // react will take the App component =>takes the html produced by this component and stick it to the div element
+    // ReactDOM.render(<App />, div)
+
+    // // Looks inside the div
+    // // and checks to see if the CommentBox is in there
+
+    // // this way is Limiting test Knowledge not recommended
+    // // expect(div.innerHTML).toContain('Comment Box')
+
+    // // better way by using Enzyme open source package 
+    // // made for testing to be a little bit easier
+
+
+    // // this is like a cleanup ,
+    // // it will found the app component that we rendered
+    // // and it will remove it
+    // ReactDOM.unmountComponentAtNode(div)
 })
