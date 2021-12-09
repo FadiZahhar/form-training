@@ -19,25 +19,27 @@ it('has a text area and a button', () => {
 
 })
 
-it('has a text area that users can type in', () => {
-    wrapped.find('textarea').simulate('change', {
-        target: { value: 'new comment' }
+// used to describe some common behaviour for specific it functions
+describe('the text area', () => {
+
+    beforeEach(() => {
+        wrapped.find('textarea').simulate('change', {
+            target: { value: 'new comment' }
+        })
+        wrapped.update();
     })
-    wrapped.update();
 
-    expect(wrapped.find('textarea').prop('value')).toEqual('new comment')
+    it('has a text area that users can type in', () => {
+        expect(wrapped.find('textarea').prop('value')).toEqual('new comment')
 
-})
-
-it('when form is submitted text area got empty', () => {
-    wrapped.find('textarea').simulate('change', {
-        target: { value: 'new comment' }
     })
-    wrapped.update();
 
-    wrapped.find('form').simulate('submit')
-    wrapped.update();
+    it('when form is submitted text area got empty', () => {
+        wrapped.find('form').simulate('submit')
+        wrapped.update();
 
-    expect(wrapped.find('textarea').prop('value')).toEqual('')
+        expect(wrapped.find('textarea').prop('value')).toEqual('')
+
+    })
 
 })
