@@ -14,6 +14,7 @@ import React from 'react'
 import { shallow } from 'enzyme'
 import App from '../App'
 import CommentBox from '../CommentBox'
+import CommentList from '../CommentList'
 
 it('shows a comment box', () => {
 
@@ -21,14 +22,6 @@ it('shows a comment box', () => {
     const wrapped = shallow(<App />);
 
     expect(wrapped.find(CommentBox).length).toEqual(1)
-
-
-
-
-
-
-
-
 
     // // their is no div inside the browser, no chrome/firefox.. here so its a fake div
     // const div = document.createElement('div')
@@ -50,4 +43,12 @@ it('shows a comment box', () => {
     // // it will found the app component that we rendered
     // // and it will remove it
     // ReactDOM.unmountComponentAtNode(div)
+})
+
+it('shows a comment List', () => {
+
+    // shallow renders just the component without the children 
+    const wrapped = shallow(<App />);
+
+    expect(wrapped.find(CommentList).length).toEqual(1)
 })
