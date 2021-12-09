@@ -24,4 +24,6 @@ it('has a text area that users can type in', () => {
         target: { value: 'new comment' }
     })
 
+    wrapped.update();
+
 })
