@@ -12,6 +12,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import App from '../App'
+import CommentBox from '../CommentBox'
 
 it('shows a comment box', () => {
     // their is no div inside the browser, no chrome/firefox.. here so its a fake div
@@ -22,7 +23,13 @@ it('shows a comment box', () => {
 
     // Looks inside the div
     // and checks to see if the CommentBox is in there
-    expect(div.innerHTML).toContain('Comment Box')
+
+    // this way is Limiting test Knowledge not recommended
+    // expect(div.innerHTML).toContain('Comment Box')
+
+    // better way by using Enzyme open source package 
+    // made for testing to be a little bit easier
+
 
     // this is like a cleanup ,
     // it will found the app component that we rendered
