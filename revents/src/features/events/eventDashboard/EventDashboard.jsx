@@ -23,12 +23,14 @@ export default function EventDashboard({
         <EventList events={events} selectEvent={selectEvent} />
       </Grid.Column>
       <Grid.Column width={6}>
+        {/* without using the key in the EventForm it will lead to not update the props by not rerendring the component */}
         {formOpen && (
           <EventForm
             setFormOpen={setFormOpen}
             setEvents={setEvents}
             createEvent={handleCreateEvent}
             selectedEvent={selectedEvent}
+            key={selectedEvent ? selectedEvent.id : null}
           />
         )}
       </Grid.Column>
