@@ -16,11 +16,24 @@ export default function EventDashboard({
   function handleCreateEvent(event) {
     setEvents([...events, event]);
   }
+  function handleUpdateEvent(updatedEvent) {
+    setEvents(
+      events.map((evt) => (evt.id === updatedEvent.id ? updatedEvent : evt))
+    );
+    selectEvent(null);
+  }
 
+  function handleDeleteEvent(eventId) {
+    setEvents(events.filter((evt) => evt.id !== eventId));
+  }
   return (
     <Grid>
       <Grid.Column width={10}>
-        <EventList events={events} selectEvent={selectEvent} />
+        <EventList
+          events={events}
+          selectEvent={selectEvent}
+          deleteEvent={handleDeleteEvent}
+        />
       </Grid.Column>
       <Grid.Column width={6}>
         {/* without using the key in the EventForm it will lead to not update the props by not rerendring the component */}
@@ -30,6 +43,7 @@ export default function EventDashboard({
             setEvents={setEvents}
             createEvent={handleCreateEvent}
             selectedEvent={selectedEvent}
+            updateEvent={handleUpdateEvent}
             key={selectedEvent ? selectedEvent.id : null}
           />
         )}

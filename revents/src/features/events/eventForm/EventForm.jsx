@@ -8,6 +8,7 @@ export default function EventForm({
   setEvents,
   createEvent,
   selectedEvent,
+  updateEvent,
 }) {
   // ?? used if selectedEvent is null then will go to empty values else its will be selectedEvent
   const initialValues = selectedEvent ?? {
@@ -20,13 +21,16 @@ export default function EventForm({
   };
   const [values, setValues] = useState(initialValues);
   function handleFormSubmit() {
-    createEvent({
-      ...values,
-      id: cuid(),
-      hostedBy: "Bob",
-      attendees: [],
-      hostPhotoURL: "./assets/user.png",
-    });
+    // we got all the attribitues in the selectedEvent(contains all things JSON not just the values of the form), and overite them with the values of form
+    selectedEvent
+      ? updateEvent({ ...selectedEvent, ...values })
+      : createEvent({
+          ...values,
+          id: cuid(),
+          hostedBy: "Bob",
+          attendees: [],
+          hostPhotoURL: "./assets/user.png",
+        });
     setFormOpen(false);
   }
 
