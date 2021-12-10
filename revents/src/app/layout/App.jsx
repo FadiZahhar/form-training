@@ -1,5 +1,5 @@
 import React from "react";
-import EventDashboard from "../../features/events/eventDashboard/EventDashboard";
+import { EventDashboard } from "../../features/events/eventDashboard/EventDashboard";
 
 function App() {
   return (
