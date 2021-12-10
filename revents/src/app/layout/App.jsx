@@ -5,12 +5,12 @@ import NavBar from "../../features/nav/Navbar";
 
 function App() {
   return (
-    <div>
+    <>
       <NavBar />
       <Container className="main">
         <EventDashboard />
       </Container>
-    </div>
+    </>
   );
 }
 
