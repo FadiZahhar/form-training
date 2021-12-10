@@ -1,9 +1,16 @@
 import React from "react";
 import { useState } from "react";
 import { Button, Form, Header, Segment } from "semantic-ui-react";
+import cuid from "cuid";
 
-export default function EventForm({ setFormOpen, setEvents }) {
-  const initialValues = {
+export default function EventForm({
+  setFormOpen,
+  setEvents,
+  createEvent,
+  selectedEvent,
+}) {
+  // ?? used if selectedEvent is null then will go to empty values else its will be selectedEvent
+  const initialValues = selectedEvent ?? {
     title: "",
     category: "",
     description: "",
@@ -13,7 +20,14 @@ export default function EventForm({ setFormOpen, setEvents }) {
   };
   const [values, setValues] = useState(initialValues);
   function handleFormSubmit() {
-    console.log(values);
+    createEvent({
+      ...values,
+      id: cuid(),
+      hostedBy: "Bob",
+      attendees: [],
+      hostPhotoURL: "./assets/user.png",
+    });
+    setFormOpen(false);
   }
 
   function handleInputChange(e) {
