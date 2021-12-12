@@ -12,6 +12,14 @@ import zIndex from '@mui/material/styles/zIndex';
 
 class App extends Component{
 
+  constructor(props){
+    super(props);
+    // for fourteenDaysSelection, 0 = bar chart, 1 = area chart, 2 = line chart
+    this.state = {
+      fourteenSelection:0
+    }
+  }
+
   renderNavBar = () =>{
     return(
       <nav className="navbar navbar-expand-lg navbar-light bg-light">
@@ -358,6 +366,9 @@ class App extends Component{
           show: false,
           minHeight: 0,
           maxHeight: 0
+        },
+        axisTicks: {
+          show: false
         }
       },
 
@@ -371,6 +382,8 @@ class App extends Component{
       grid: {
         show: false
       },
+
+      
 
       markers: {
         size: 0
@@ -404,7 +417,7 @@ class App extends Component{
         <p style={{position:"absolute", top: 15, left: 15}}><strong>{title}</strong></p>
         <p style={{position:"absolute", top: 55, left: 15, fontSize: 25}}><strong>{stat}</strong></p>
         <div style={{position: "absolute", bottom: 20, left: 15, zIndex: 1, color: "#4a5568"}}>{description}</div>
-        <Chart options={options} series={series} type="area" width="100%" height="100%" style={{position: "relative", right: -10, bottom: -5 }}/>
+        <Chart options={options} series={series} type="area" width="100%" height="100%" style={{position: "relative", right: -10, bottom: -4 }}/>
       </div>
     )
   }
@@ -439,13 +452,92 @@ class App extends Component{
     )
   }
 
+  renderFourteenDaysChart = (type) =>{
+    let series =[{
+      name: 'Confirmed Cases',
+      data: [44, 55, 41, 67, 22, 43, 44, 55, 41, 67, 22, 43, 43, 43]
+    }, {
+      name: 'Recovered Cases',
+      data: [13, 23, 20, 8, 13, 27, 26, 13, 23, 20, 8, 13, 27, 26]
+    }, {
+      name: 'Death',
+      data: [11, 17, 15, 15, 21, 14, 27, 11, 17, 15, 15, 21, 14, 27]
+    }];
+
+
+    let options = {
+      chart: {
+      stacked: type==="bar"?true:false,
+      toolbar: {
+        show: false
+      },
+      
+    },
+    dataLabels: {
+      enabled: false
+    },
+    plotOptions: {
+      bar: {
+        horizontal: false
+      },
+    },
+    xaxis: {
+      type: 'datetime',
+      categories: ['01/01/2021 GMT', '01/02/2021 GMT', '01/03/2021 GMT', '01/04/2021 GMT',
+        '01/05/2021 GMT', '01/06/2021 GMT', '01/07/2021 GMT', '01/08/2021 GMT', '01/09/2021 GMT', '01/10/2021 GMT', '01/11/2021 GMT', '01/12/2021 GMT', '01/13/2021 GMT', '01/14/2021 GMT'
+      ],
+    },
+    yaxis: {
+      opposite: true
+    },
+    legend: {
+      position: 'bottom',
+    },
+    fill: {
+      opacity: 1
+    },
+    colors: ['rgba(0, 143, 251, 0.85)', 'rgba(0, 227, 150, 0.85)', 'rgba(254, 176, 25, 0.85)'],
+    grid:{
+      show: false
+    },
+    stroke: {
+      curve: "smooth"
+    }
+    };
+
+    return(
+      <Chart series={series} options={options} width="100%" height="340" type={type} />
+    )
+  }
+
+ 
+
   renderThirdLargeCard = () =>{
+    let {fourteenSelection} = this.state;
+
+
     return(
       <div className="row">
         <div className="col mb-10 paddingHorizontal5">
           <div className="card">
               <div className="card-body">
-                 
+                 <h5><strong>Past 14 Days Chart</strong></h5>
+                 <div className="dropdown show">
+                    <a className="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                      {fourteenSelection === 0 && "Bar Chart"}
+                      {fourteenSelection === 1 && "Area Chart"}
+                      {fourteenSelection === 2 && "Line Chart"}
+                    </a>
+
+                    <div className="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                      <a className="dropdown-item" onClick={(e)=>this.setState({fourteenSelection:0})}>Bar</a>
+                      <a className="dropdown-item" onClick={(e)=>this.setState({fourteenSelection:1})}>Area</a>
+                      <a className="dropdown-item" onClick={(e)=>this.setState({fourteenSelection:2})}>Line</a>
+                    </div>
+                  </div>
+                 {fourteenSelection === 0 && this.renderFourteenDaysChart("bar")}
+                 {fourteenSelection === 1 && this.renderFourteenDaysChart("area")}
+                 {fourteenSelection === 2 && this.renderFourteenDaysChart("line")}
               </div>
           </div>
         </div>
