@@ -8,7 +8,9 @@ import FlagIcon from "./flagIcon";
 
 //ApexCharts library
 import Chart from "react-apexcharts";
-import zIndex from '@mui/material/styles/zIndex';
+
+//Card Components (child)
+import Card from "./components/card";
 
 class App extends Component{
 
@@ -312,28 +314,22 @@ class App extends Component{
     return(
       <div className="row">
         <div className="col-lg-6 col-md-6 col-sm-12 col-xs-12 mb-10 paddingHorizontal5">
-          <div className="card">
-              <div className="card-body">
-                 {this.renderOverView()}
-                 {this.renderStats()}
-              </div>
-          </div>
+          <Card>
+            {this.renderOverView()}
+            {this.renderStats()}
+          </Card>
         </div>
 
         <div className="col-lg-3 col-md-3 col-sm-6 col-xs-12 mb-10 paddingHorizontal5">
-          <div className="card" style={{height: "100%"}}>
-              <div className="card-body" style={{padding:0}}>
-                {this.renderFatalityCard()}
-              </div>
-          </div>
+          <Card card={{height: "100%"}} cardBody={{padding:0}}>
+            {this.renderFatalityCard()}
+          </Card>
         </div>
 
         <div className="col-lg-3 col-md-3 col-sm-6 col-xs-12 mb-10 paddingHorizontal5">
-          <div className="card" style={{height: "100%"}}>
-              <div className="card-body" style={{padding:0}}>
-                {this.renderRecoveryCard()}
-              </div>
-          </div>
+          <Card card={{height: "100%"}} cardBody={{padding:0}}>
+            {this.renderRecoveryCard()}
+          </Card>
         </div>
       </div>
     )
@@ -426,27 +422,21 @@ class App extends Component{
     return(
       <div className="row">
         <div className="col-lg-4 col-md-4 col-sm-6 col-xs-12 mb-10 paddingHorizontal5">
-          <div className="card">
-              <div className="card-body" style={{padding: 0}}>
-                {this.renderSecondThreeCardsBG("cardcardOneInSecondSection", "Critical Cases treated in ICU", 168, <p><span style={{color: "red"}}>0.0%</span> of total cases</p>)}
-              </div>
-          </div>
+          <Card cardBody={{padding:0}}>
+          {this.renderSecondThreeCardsBG("cardcardOneInSecondSection", "Critical Cases treated in ICU", 168, <p><span style={{color: "red"}}>0.0%</span> of total cases</p>)}
+          </Card>
         </div>
 
         <div className="col-lg-4 col-md-4 col-sm-6 col-xs-12 mb-10 paddingHorizontal5">
-          <div className="card">
-              <div className="card-body" style={{padding: 0}}>
-                {this.renderSecondThreeCardsBG("cardcardTwoInSecondSection", "Daily Cases Receiving Treatment", 35032, <p><span style={{color: "red"}}>5.2%</span> of total cases</p>)}
-              </div>
-          </div>
+          <Card cardBody={{padding:0}}>
+          {this.renderSecondThreeCardsBG("cardcardTwoInSecondSection", "Daily Cases Receiving Treatment", 35032, <p><span style={{color: "red"}}>5.2%</span> of total cases</p>)}
+          </Card>
         </div>
 
         <div className="col-lg-4 col-md-4 col-sm-6 col-xs-12 mb-10 paddingHorizontal5">
-          <div className="card">
-              <div className="card-body" style={{padding: 0}}>
-                {this.renderSecondThreeCardsBG("cardcardThreeInSecondSection", "Daily Confirmed Cases", 100090, <p>Per Million Population</p>)}
-              </div>
-          </div>
+          <Card cardBody={{padding:0}}>
+          {this.renderSecondThreeCardsBG("cardcardThreeInSecondSection", "Daily Confirmed Cases", 100090, <p>Per Million Population</p>)}
+          </Card>
         </div>
       </div>
     )
@@ -519,27 +509,25 @@ class App extends Component{
     return(
       <div className="row">
         <div className="col mb-10 paddingHorizontal5">
-          <div className="card">
-              <div className="card-body">
-                 <h5><strong>Past 14 Days Chart</strong></h5>
-                 <div className="dropdown show">
-                    <a className="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                      {fourteenSelection === 0 && "Bar Chart"}
-                      {fourteenSelection === 1 && "Area Chart"}
-                      {fourteenSelection === 2 && "Line Chart"}
-                    </a>
+         <Card>
+            <h5><strong>Past 14 Days Chart</strong></h5>
+            <div className="dropdown show">
+              <a className="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                {fourteenSelection === 0 && "Bar Chart"}
+                {fourteenSelection === 1 && "Area Chart"}
+                {fourteenSelection === 2 && "Line Chart"}
+              </a>
 
-                    <div className="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                      <a className="dropdown-item" onClick={(e)=>this.setState({fourteenSelection:0})}>Bar</a>
-                      <a className="dropdown-item" onClick={(e)=>this.setState({fourteenSelection:1})}>Area</a>
-                      <a className="dropdown-item" onClick={(e)=>this.setState({fourteenSelection:2})}>Line</a>
-                    </div>
-                  </div>
-                 {fourteenSelection === 0 && this.renderFourteenDaysChart("bar")}
-                 {fourteenSelection === 1 && this.renderFourteenDaysChart("area")}
-                 {fourteenSelection === 2 && this.renderFourteenDaysChart("line")}
+              <div className="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                <a className="dropdown-item" onClick={(e)=>this.setState({fourteenSelection:0})}>Bar</a>
+                <a className="dropdown-item" onClick={(e)=>this.setState({fourteenSelection:1})}>Area</a>
+                <a className="dropdown-item" onClick={(e)=>this.setState({fourteenSelection:2})}>Line</a>
               </div>
-          </div>
+            </div>
+            {fourteenSelection === 0 && this.renderFourteenDaysChart("bar")}
+            {fourteenSelection === 1 && this.renderFourteenDaysChart("area")}
+            {fourteenSelection === 2 && this.renderFourteenDaysChart("line")}
+          </Card>
         </div>
 
       </div>
