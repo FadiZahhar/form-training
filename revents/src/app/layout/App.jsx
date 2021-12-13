@@ -22,14 +22,22 @@ function App() {
     setFormOpen(true);
   }
   return (
+    // we use this method if we want to render specific page in different way like homePage we don't want NavBar and container
     <>
-      <NavBar setFormOpen={handleCreateFormOpen} />
-      <Container className="main">
-        <Route exact path="/" component={HomePage} />
-        <Route exact path="/events" component={EventDashboard} />
-        <Route path="/events/:id" component={EventDetailedPage} />
-        <Route path="/createEvent" component={EventForm} />
-      </Container>
+      <Route exact path="/" component={HomePage} />
+      <Route
+        path={"/(.+)"}
+        render={() => (
+          <>
+            <NavBar setFormOpen={handleCreateFormOpen} />
+            <Container className="main">
+              <Route exact path="/events" component={EventDashboard} />
+              <Route path="/events/:id" component={EventDetailedPage} />
+              <Route path="/createEvent" component={EventForm} />
+            </Container>
+          </>
+        )}
+      />
     </>
   );
 }
