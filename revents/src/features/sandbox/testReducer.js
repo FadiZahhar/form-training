@@ -10,12 +10,12 @@ export default function testReducer(state = initialState, action) {
         case INCREMENT_COUNTER:
             return {
                 ...state,
-                data: state.data + 1
+                data: state.data + action.payload
             };
         case DECREMENT_COUNTER:
             return {
                 ...state,
-                data: state.data - 1
+                data: state.data - action.payload
             };
         default:
             return state;

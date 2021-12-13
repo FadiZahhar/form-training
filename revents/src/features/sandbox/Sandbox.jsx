@@ -12,12 +12,12 @@ export default function Sandbox() {
       <h1>Testing 123</h1>
       <h3>The data is:{data} </h3>
       <Button
-        onClick={() => dispatch({ type: INCREMENT_COUNTER })}
+        onClick={() => dispatch({ type: INCREMENT_COUNTER, payload: 10 })}
         content="Increment"
         color="green"
       />
       <Button
-        onClick={() => dispatch({ type: DECREMENT_COUNTER })}
+        onClick={() => dispatch({ type: DECREMENT_COUNTER, payload: 5 })}
         content="Decrement"
         color="red"
       />
