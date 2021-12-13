@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Dropdown, Image, Menu } from 'semantic-ui-react';
-export default function SignedInMenu() {
+export default function SignedInMenu({ setAuthenticated }) {
   return (
     <>
       <Menu.Item position="right">
@@ -15,7 +15,11 @@ export default function SignedInMenu() {
               icon="plus"
             />
             <Dropdown.Item text="My profile" icon="user" />
-            <Dropdown.Item text="Sign out" icon="power" />
+            <Dropdown.Item
+              onClick={() => setAuthenticated(false)}
+              text="Sign out"
+              icon="power"
+            />
           </Dropdown.Menu>
         </Dropdown>
       </Menu.Item>
