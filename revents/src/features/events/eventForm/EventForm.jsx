@@ -1,7 +1,8 @@
-import React from "react";
-import { useState } from "react";
-import { Button, Form, Header, Segment } from "semantic-ui-react";
-import cuid from "cuid";
+import React from 'react';
+import { useState } from 'react';
+import { Button, Form, Header, Segment } from 'semantic-ui-react';
+import cuid from 'cuid';
+import { Link } from 'react-router-dom';
 
 export default function EventForm({
   setFormOpen,
@@ -12,12 +13,12 @@ export default function EventForm({
 }) {
   // ?? used if selectedEvent is null then will go to empty values else its will be selectedEvent
   const initialValues = selectedEvent ?? {
-    title: "",
-    category: "",
-    description: "",
-    city: "",
-    venue: "",
-    date: "",
+    title: '',
+    category: '',
+    description: '',
+    city: '',
+    venue: '',
+    date: '',
   };
   const [values, setValues] = useState(initialValues);
   function handleFormSubmit() {
@@ -27,9 +28,9 @@ export default function EventForm({
       : createEvent({
           ...values,
           id: cuid(),
-          hostedBy: "Bob",
+          hostedBy: 'Bob',
           attendees: [],
-          hostPhotoURL: "./assets/user.png",
+          hostPhotoURL: './assets/user.png',
         });
     setFormOpen(false);
   }
@@ -40,7 +41,7 @@ export default function EventForm({
   }
   return (
     <Segment clearing>
-      <Header content={selectedEvent ? "Edit the event" : "Create new event"} />
+      <Header content={selectedEvent ? 'Edit the event' : 'Create new event'} />
       <Form onSubmit={handleFormSubmit}>
         <Form.Field>
           <input
@@ -99,10 +100,11 @@ export default function EventForm({
         <Form.Field>
           <Button type="submit" floated="right" positive content="Submit" />
           <Button
+            as={Link}
+            to="/events"
             type="submit"
             floated="right"
             content="Cancel"
-            onClick={() => setFormOpen(false)}
           />
         </Form.Field>
       </Form>
