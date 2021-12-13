@@ -16,12 +16,19 @@ function handleUpdateEvent (updatedEvent) {
     selectEvent(null);
     
 }
+function handleDeleteEvent (eventId) {
+    setEvents(events.filter(evt => evt.id !== eventId));
+}
     return (
         <Grid>
             
             <Grid.Column width={10}>
 
-               <EventList events={events} selectEvent={selectEvent} />
+                <EventList 
+                    events={events} 
+                    selectEvent={selectEvent}
+                    deleteEvent={handleDeleteEvent}
+                />
             
             </Grid.Column>
             <Grid.Column width={6}>
@@ -33,7 +40,9 @@ function handleUpdateEvent (updatedEvent) {
                     createEvent={handleCreateEvent}
                     selectedEvent={selectedEvent}
                     updateEvent={handleUpdateEvent}
+                    
                     key={selectedEvent ? selectedEvent.id : null}
+                    
                 />} 
 
             </Grid.Column>
