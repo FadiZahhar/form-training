@@ -19,7 +19,7 @@ const [events, setEvents]= useState(sampleData)
             <Grid.Column width={6}>
                 
                 {formOpen &&
-                <EventForm setFormOpen={setFormOpen}/>} 
+                <EventForm setFormOpen={setFormOpen} setEvents={setEvents}/>} 
 
             </Grid.Column>
         </Grid>
