@@ -1,3 +1,4 @@
+import { openModal } from '../../app/common/modals/modalReducer';
 import React from 'react';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
@@ -20,6 +21,13 @@ export default function Sandbox() {
         onClick={() => dispatch(decrement(10))}
         content="Decrement"
         color="red"
+      />
+      <Button
+        onClick={() =>
+          dispatch(openModal({ modalType: 'TestModal', modalProps: { data } }))
+        }
+        content="Open Modal"
+        color="teal"
       />
     </>
   );

@@ -7,6 +7,7 @@ import { Container } from 'semantic-ui-react';
 import EventDashboard from '../../features/events/eventDashboard/EventDashboard';
 import NavBar from '../../features/nav/Navbar';
 import Sandbox from '../../features/sandbox/Sandbox';
+import ModalManager from '../common/modals/ModalManager';
 
 function App() {
   const { key } = useLocation();
@@ -14,6 +15,7 @@ function App() {
   return (
     // we use this method if we want to render specific page in different way like homePage we don't want NavBar and container
     <>
+      <ModalManager />
       <Route exact path="/" component={HomePage} />
       <Route
         path={'/(.+)'}
