@@ -1,13 +1,13 @@
 import React from 'react';
-import { Button, Header, Segment, FormField, Label } from 'semantic-ui-react';
+import { Button, Header, Segment } from 'semantic-ui-react';
 import cuid from 'cuid';
 import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
 import { createEvent, updateEvent } from '../eventActions';
-import { Formik, Form, Field, ErrorMessage } from 'formik';
+import { Formik, Form } from 'formik';
 import * as Yup from 'yup';
-import MyTextInput from './../../../app/common/form/MyTextInput';
+import MyTextInput from '../../../app/common/form/MyTextInput';
 
 export default function EventForm({ match, history }) {
   const dispatch = useDispatch();
@@ -28,50 +28,43 @@ export default function EventForm({ match, history }) {
 
   const validationSchema = Yup.object({
     title: Yup.string().required('You must provide a title'),
+    category: Yup.string().required('You must provide a category'),
+    description: Yup.string().required(),
+    city: Yup.string().required(),
+    venue: Yup.string().required(),
+    date: Yup.string().required(),
   });
-
-  // function handleFormSubmit() {
-  //   // we got all the attribitues in the selectedEvent(contains all things JSON not just the values of the form), and overite them with the values of form
-  //   selectedEvent
-  //     ? dispatch(updateEvent({ ...selectedEvent, ...values }))
-  //     : dispatch(
-  //         createEvent({
-  //           ...values,
-  //           id: cuid(),
-  //           hostedBy: 'Bob',
-  //           attendees: [],
-  //           hostPhotoURL: './assets/user.png',
-  //         })
-  //       );
-  //   history.push('/events');
-  // }
 
   return (
     <Segment clearing>
-      <Header content={selectedEvent ? 'Edit the event' : 'Create new event'} />
-
       <Formik
         initialValues={initialValues}
         validationSchema={validationSchema}
-        onSubmit={(values) => console.log(values)}
+        onSubmit={(values) => {
+          // we got all the attribitues in the selectedEvent(contains all things JSON not just the values of the form), and overite them with the values of form
+          selectedEvent
+            ? dispatch(updateEvent({ ...selectedEvent, ...values }))
+            : dispatch(
+                createEvent({
+                  ...values,
+                  id: cuid(),
+                  hostedBy: 'Bob',
+                  attendees: [],
+                  hostPhotoURL: './assets/user.png',
+                })
+              );
+          history.push('/events');
+        }}
       >
         <Form className="ui form">
+          <Header sub color="teal" content="Event Details" />
           <MyTextInput name="title" placeholder="Event title" />
-          <FormField>
-            <Field name="category" placeholder="category" />
-          </FormField>
-          <FormField>
-            <Field name="description" placeholder="description" />
-          </FormField>
-          <FormField>
-            <Field name="city" placeholder="city" />
-          </FormField>
-          <FormField>
-            <Field name="venue" placeholder="venue" />
-          </FormField>
-          <FormField>
-            <Field name="date" placeholder="date" type="date" />
-          </FormField>
+          <MyTextInput name="category" placeholder="category" />
+          <MyTextInput name="description" placeholder="description" />
+          <Header sub color="teal" content="Event Location Details" />
+          <MyTextInput name="city" placeholder="city" />
+          <MyTextInput name="venue" placeholder="venue" />
+          <MyTextInput name="date" placeholder="date" type="date" />
 
           <Button type="submit" floated="right" positive content="Submit" />
           <Button
