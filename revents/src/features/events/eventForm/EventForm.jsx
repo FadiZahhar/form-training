@@ -9,6 +9,8 @@ import { Formik, Form } from 'formik';
 import * as Yup from 'yup';
 import MyTextInput from '../../../app/common/form/MyTextInput';
 import MyTextArea from '../../../app/common/form/MyTextArea';
+import MySelectInput from '../../../app/common/form/MySelectInput';
+import { categoryData } from '../../../app/api/categoryOptions';
 
 export default function EventForm({ match, history }) {
   const dispatch = useDispatch();
@@ -60,7 +62,11 @@ export default function EventForm({ match, history }) {
         <Form className="ui form">
           <Header sub color="teal" content="Event Details" />
           <MyTextInput name="title" placeholder="Event title" />
-          <MyTextInput name="category" placeholder="category" />
+          <MySelectInput
+            name="category"
+            placeholder="category"
+            options={categoryData}
+          />
           <MyTextArea name="description" placeholder="description" rows={3} />
           <Header sub color="teal" content="Event Location Details" />
           <MyTextInput name="city" placeholder="city" />
