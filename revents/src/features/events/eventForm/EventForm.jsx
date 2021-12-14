@@ -7,7 +7,7 @@ import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
 import { createEvent, updateEvent } from '../eventActions';
 
-export default function EventForm({ match }) {
+export default function EventForm({ match, history }) {
   const dispatch = useDispatch();
 
   const selectedEvent = useSelector((state) =>
@@ -37,6 +37,7 @@ export default function EventForm({ match }) {
             hostPhotoURL: './assets/user.png',
           })
         );
+    history.push('/events');
   }
 
   function handleInputChange(e) {
