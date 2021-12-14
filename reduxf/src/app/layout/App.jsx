@@ -33,7 +33,7 @@ export default function App() {
         <Container className='main'>
           
           <Route exact path='/events' component={EventDashboard}/>
-          <Route path='/events/:id' component={EventDetailedPage}/>
+          <Route path="/events/:id" component={EventDetailedPage}/>
           <Route path='/createEvent' component={EventForm}/>
         </Container>
         </>
