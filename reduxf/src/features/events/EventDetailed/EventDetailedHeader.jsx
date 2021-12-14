@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import {Segment,Image,Item,Header,Button} from 'semantic-ui-react'
 
 export default function EventDetailedHeader(){
@@ -42,7 +43,12 @@ export default function EventDetailedHeader(){
 
     <Segment attached="bottom">
         <Button>Cancel My Place</Button>
-        <Button color="teal">JOIN THIS EVENT</Button>
+        <Button 
+        as={Link} to={`/manage/`}
+        color="teal"
+        >
+            JOIN THIS EVENT
+        </Button>
 
         <Button color="orange" floated="right">
             Manage Event
