@@ -3,14 +3,17 @@ import { useState } from 'react';
 import { Button, Form, Header, Segment } from 'semantic-ui-react';
 import cuid from 'cuid';
 import { Link } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
+import { createEvent, updateEvent } from '../eventActions';
 
-export default function EventForm({
-  setFormOpen,
-  setEvents,
-  createEvent,
-  selectedEvent,
-  updateEvent,
-}) {
+export default function EventForm({ match }) {
+  const dispatch = useDispatch();
+
+  const selectedEvent = useSelector((state) =>
+    state.event.events.find((e) => e.id === match.params.id)
+  );
+
   // ?? used if selectedEvent is null then will go to empty values else its will be selectedEvent
   const initialValues = selectedEvent ?? {
     title: '',
@@ -24,15 +27,16 @@ export default function EventForm({
   function handleFormSubmit() {
     // we got all the attribitues in the selectedEvent(contains all things JSON not just the values of the form), and overite them with the values of form
     selectedEvent
-      ? updateEvent({ ...selectedEvent, ...values })
-      : createEvent({
-          ...values,
-          id: cuid(),
-          hostedBy: 'Bob',
-          attendees: [],
-          hostPhotoURL: './assets/user.png',
-        });
-    setFormOpen(false);
+      ? dispatch(updateEvent({ ...selectedEvent, ...values }))
+      : dispatch(
+          createEvent({
+            ...values,
+            id: cuid(),
+            hostedBy: 'Bob',
+            attendees: [],
+            hostPhotoURL: './assets/user.png',
+          })
+        );
   }
 
   function handleInputChange(e) {
