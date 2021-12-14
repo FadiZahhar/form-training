@@ -1,12 +1,12 @@
 import React from 'react';
 import { useState } from 'react';
-import { Button, Form, Header, Segment } from 'semantic-ui-react';
+import { Button, Header, Segment, FormField } from 'semantic-ui-react';
 import cuid from 'cuid';
 import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
 import { createEvent, updateEvent } from '../eventActions';
-import { Formik } from 'formik';
+import { Formik, Form, Field } from 'formik';
 
 export default function EventForm({ match, history }) {
   const dispatch = useDispatch();
@@ -53,75 +53,35 @@ export default function EventForm({ match, history }) {
         initialValues={initialValues}
         onSubmit={(values) => console.log(values)}
       >
-        {/* values ,handleChange,handleSubmit are the props */}
-        {({ values, handleChange, handleSubmit }) => (
-          <Form onSubmit={handleSubmit}>
-            <Form.Field>
-              <input
-                type="text"
-                placeholder="Event title"
-                name="title"
-                value={values.title}
-                onChange={handleChange}
-              />
-            </Form.Field>
-            <Form.Field>
-              <input
-                type="text"
-                placeholder="Category"
-                name="category"
-                value={values.category}
-                onChange={handleChange}
-              />
-            </Form.Field>
-            <Form.Field>
-              <input
-                type="text"
-                placeholder="Description"
-                name="description"
-                value={values.description}
-                onChange={handleChange}
-              />
-            </Form.Field>
-            <Form.Field>
-              <input
-                type="text"
-                placeholder="City"
-                name="city"
-                value={values.city}
-                onChange={handleChange}
-              />
-            </Form.Field>
-            <Form.Field>
-              <input
-                type="text"
-                placeholder="Venue"
-                name="venue"
-                value={values.venue}
-                onChange={handleChange}
-              />
-            </Form.Field>
-            <Form.Field>
-              <input
-                type="date"
-                placeholder="Date"
-                name="date"
-                value={values.date}
-                onChange={handleChange}
-              />
-            </Form.Field>
-            <Form.Field>
-              <Button type="submit" floated="right" positive content="Submit" />
-              <Button
-                as={Link}
-                to="/events"
-                type="submit"
-                floated="right"
-                content="Cancel"
-              />
-            </Form.Field>
-          </Form>
-        )}
+        <Form className="ui form">
+          <FormField>
+            <Field name="title" placeholder="Event title" />
+          </FormField>
+          <FormField>
+            <Field name="category" placeholder="category" />
+          </FormField>
+          <FormField>
+            <Field name="description" placeholder="description" />
+          </FormField>
+          <FormField>
+            <Field name="city" placeholder="city" />
+          </FormField>
+          <FormField>
+            <Field name="venue" placeholder="venue" />
+          </FormField>
+          <FormField>
+            <Field name="date" placeholder="date" type="date" />
+          </FormField>
+
+          <Button type="submit" floated="right" positive content="Submit" />
+          <Button
+            as={Link}
+            to="/events"
+            type="submit"
+            floated="right"
+            content="Cancel"
+          />
+        </Form>
       </Formik>
     </Segment>
   );
