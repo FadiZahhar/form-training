@@ -1,3 +1,4 @@
+/* global google*/
 import React from 'react';
 import { Button, Header, Segment } from 'semantic-ui-react';
 import cuid from 'cuid';
@@ -71,7 +72,7 @@ export default function EventForm({ match, history }) {
           history.push('/events');
         }}
       >
-        {({ isSubmitting, dirty, isValid }) => (
+        {({ isSubmitting, dirty, isValid, values }) => (
           <Form className="ui form">
             <Header sub color="teal" content="Event Details" />
             <MyTextInput name="title" placeholder="Event title" />
@@ -83,7 +84,16 @@ export default function EventForm({ match, history }) {
             <MyTextArea name="description" placeholder="description" rows={3} />
             <Header sub color="teal" content="Event Location Details" />
             <MyPlaceInput name="city" placeholder="city" />
-            <MyPlaceInput name="venue" placeholder="venue" />
+            <MyPlaceInput
+              name="venue"
+              disabled={!values.city.latLng}
+              placeholder="venue"
+              options={{
+                location: new google.maps.LatLng(values.city.latLng),
+                radius: 1000,
+                types: ['establishment'],
+              }}
+            />
             <MyDateInput
               name="date"
               placeholderText="Event date"
