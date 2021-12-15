@@ -5,6 +5,7 @@ import { useSelector } from 'react-redux';
 import { Button } from 'semantic-ui-react';
 import { decrement, increment } from './testReducer';
 import TestPlaceInput from './TestPlaceInput';
+import TestMap from './TestMap';
 
 export default function Sandbox() {
   const dispatch = useDispatch();
@@ -33,6 +34,7 @@ export default function Sandbox() {
       <div style={{ marginTop: 15 }}>
         <TestPlaceInput />
       </div>
+      <TestMap />
     </>
   );
 }
