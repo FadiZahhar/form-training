@@ -2,7 +2,7 @@ import React from 'react';
 import { Button } from 'semantic-ui-react';
 
 import { useDispatch, useSelector } from 'react-redux';
-import  {DECREMENT_COUNTER, INCREMENT_COUNTER,increment,decrement} from './testReducer.js';
+import  {increment,decrement} from './testReducer.js';
 
 export default function Sandbox(){
     const dispatch = useDispatch();
