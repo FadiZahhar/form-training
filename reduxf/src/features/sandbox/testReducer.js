@@ -20,18 +20,18 @@ const initialState = {
     data: 42
 }
 
-export default function testReducer (state= initialState, action)
+export default function testReducer (state= initialState, {type,payload})
 {
-    switch (action.type) {
+    switch (type) {
         case INCREMENT_COUNTER:
             return {
                 ...state,
-                data: state.data +action.payload
+                data: state.data +payload
             };
         case DECREMENT_COUNTER:
             return{
                 ...state,
-                data: state.data -action.payload
+                data: state.data -payload
             };
             default:
             return state
