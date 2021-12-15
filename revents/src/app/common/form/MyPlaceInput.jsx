@@ -1,6 +1,6 @@
-import { useField } from 'formik';
 import React from 'react';
-import { FormField, Label, List, Segment } from 'semantic-ui-react';
+import { useField } from 'formik';
+import { FormField, Label, Segment, List } from 'semantic-ui-react';
 import PlacesAutocomplete, {
   geocodeByAddress,
   getLatLng,
@@ -15,6 +15,14 @@ export default function MyPlaceInput({ label, options, ...props }) {
       .then((latLng) => helpers.setValue({ address, latLng }))
       .catch((error) => helpers.setError(error));
   }
+
+  function handleBlur(e) {
+    field.onBlur(e);
+    if (!field.value.latLng) {
+      helpers.setValue({ address: '', latLng: null });
+    }
+  }
+
   return (
     <PlacesAutocomplete
       value={field.value['address']}
@@ -24,10 +32,16 @@ export default function MyPlaceInput({ label, options, ...props }) {
     >
       {({ getInputProps, suggestions, getSuggestionItemProps, loading }) => (
         <FormField error={meta.touched && !!meta.error}>
-          <input {...getInputProps({ name: field.name, ...props })} />
+          <input
+            {...getInputProps({
+              name: field.name,
+              onBlur: (e) => handleBlur(e),
+              ...props,
+            })}
+          />
           {meta.touched && meta.error ? (
             <Label basic color="red">
-              {meta.error}
+              {meta.error['address']}
             </Label>
           ) : null}
           {suggestions?.length > 0 && (
@@ -44,7 +58,7 @@ export default function MyPlaceInput({ label, options, ...props }) {
                 {suggestions.map((suggestion) => (
                   <List.Item
                     key={suggestion.placeId}
-                    {...getSuggestionItemProps(suggestions)}
+                    {...getSuggestionItemProps(suggestion)}
                   >
                     <List.Header>
                       {suggestion.formattedSuggestion.mainText}
