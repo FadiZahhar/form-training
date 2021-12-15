@@ -1,11 +1,14 @@
+import { openModal } from '../../app/common/modals/modalReducer';
 import React from 'react';
+import { useDispatch } from 'react-redux';
 import { Button, Menu } from 'semantic-ui-react';
 export default function SignedOutMenu({ setAuthenticated }) {
+  const dispatch = useDispatch();
   return (
     <>
       <Menu.Item position="right">
         <Button
-          onClick={() => setAuthenticated(true)}
+          onClick={() => dispatch(openModal({ modalType: 'LoginForm' }))}
           basic
           inverted
           content="Login"
