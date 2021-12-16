@@ -6,13 +6,13 @@ export function dataFromSnapshot(snapshot) {
     if (!snapshot.exists) return undefined;
     const data = snapshot.data();
 
-for (const prop in data){
-    if(data.hasOwnProperty(prop)){
-        if(data[prop] instanceof firebase.firestore.Timestamp){
-            data[prop]=data[prop].toDate()
+    for (const prop in data) {
+        if (data.hasOwnProperty(prop)) {
+            if (data[prop] instanceof firebase.firestore.Timestamp) {
+                data[prop] = data[prop].toDate()
+            }
         }
     }
-}
 
     return {
         ...data,
@@ -20,6 +20,6 @@ for (const prop in data){
     }
 }
 
-export function getEventsFromFirestore(observer) {
-    return db.collection('events').onSnapshot(observer);
+export function listenToEventsFromFirestore() {
+    return db.collection('events')
 }
