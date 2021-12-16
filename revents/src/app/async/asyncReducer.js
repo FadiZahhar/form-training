@@ -8,7 +8,7 @@ export function asyncActionStart() {
     }
 }
 
-export function asyncActionFinsih() {
+export function asyncActionFinish() {
     return {
         type: ASYNC_ACTION_FINISH
     }
