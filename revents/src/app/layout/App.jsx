@@ -8,6 +8,7 @@ import EventDashboard from '../../features/events/eventDashboard/EventDashboard'
 import NavBar from '../../features/nav/Navbar';
 import Sandbox from '../../features/sandbox/Sandbox';
 import ModalManager from '../common/modals/ModalManager';
+import { ToastContainer } from 'react-toastify';
 
 function App() {
   const { key } = useLocation();
@@ -16,6 +17,7 @@ function App() {
     // we use this method if we want to render specific page in different way like homePage we don't want NavBar and container
     <>
       <ModalManager />
+      <ToastContainer theme="colored" position="bottom-right" hideProgressBar />
       <Route exact path="/" component={HomePage} />
       <Route
         path={'/(.+)'}
