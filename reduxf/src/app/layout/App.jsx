@@ -26,7 +26,7 @@ export default function App() {
         <Container className='main'>
           
           <Route exact path='/events' component={EventDashboard}/>
-          <Route exact pasth='/sandbox' component={Sandbox}/>
+          <Route exact path='/sandbox' component={Sandbox}/>
           <Route path="/events/:id" component={EventDetailedPage}/>
           <Route path={['/createEvent','/manage/:id']} component={EventForm}/>
         </Container>
