@@ -8,7 +8,7 @@ export function loadEvents() {
         try {
             const events = await fetchSampleData()
             dispatch({ type: FETCH_EVENTS, payload: events })
-            dispatch(asyncActionFinish)
+            dispatch(asyncActionFinish())
         } catch (error) {
             dispatch(asyncActionError(error))
         }
