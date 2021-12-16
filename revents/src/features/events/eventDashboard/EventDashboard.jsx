@@ -2,8 +2,8 @@ import React from 'react';
 import { Grid } from 'semantic-ui-react';
 import EventList from './EventList';
 import { useSelector } from 'react-redux';
-import LoadingComponent from '../../../app/layout/LoadingComponent';
 import EventListItemPlaceholder from './EventListItemPlaceholder';
+import EventFilters from './EventFilters';
 
 export default function EventDashboard() {
   // our eventReducer is called event
@@ -24,7 +24,7 @@ export default function EventDashboard() {
       </Grid.Column>
       <Grid.Column width={6}>
         {/* without using the key in the EventForm it will lead to not update the props by not rerendring the component */}
-        <h2>Event Filters</h2>
+        <EventFilters />
       </Grid.Column>
     </Grid>
   );
