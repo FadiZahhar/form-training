@@ -60,12 +60,12 @@ export default function EventForm({ match, history }) {
   });
 
   useFirestoreDoc({
+    shoudExecute: !!match.params.id, //cast the id to boolean if there was an id its true else its false
     query: () => listenToEventFromFirestore(match.params.id),
     data: (event) => dispatch(listenToEvents([event])),
     deps: [match.params.id, dispatch],
   });
-  if (loading || (!selectedEvent && !error))
-    return <LoadingComponent content="Loading event..." />;
+  if (loading) return <LoadingComponent content="Loading event..." />;
 
   if (error) return <Redirect to="/error" />;
   return (
