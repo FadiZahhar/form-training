@@ -1,14 +1,22 @@
 import { SIGN_IN_USER, SIGN_OUT_USER } from "./authConstants";
 import firbase from '../../app/config/firebase';
 
-export function signInUser(creds) {
-    return async function (dispatch) {
-        try {
-            const result = await firbase.auth().signInWithEmailAndPassword(creds.email, creds.password);
-            dispatch({ type: SIGN_IN_USER, payload: result.user })
-        } catch (error) {
-            throw error
-        }
+export function signInUser(user) {
+    return {
+        type: SIGN_IN_USER,
+        payload: user
+    }
+}
+
+export function verifyAuth() {
+    return function (dispatch) {
+        return firbase.auth().onAuthStateChanged(user => {
+            if (user) {
+                dispatch(signInUser(user))
+            } else {
+                dispatch(signOutUser())
+            }
+        })
     }
 }
 
