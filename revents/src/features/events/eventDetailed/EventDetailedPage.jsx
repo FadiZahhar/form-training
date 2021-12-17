@@ -6,10 +6,7 @@ import EventDetailedChat from './EventDetailedChat';
 import EventDetailedHeader from './EventDetailedHeader';
 import EventDetailedInfo from './EventDetailedInfo';
 import EventDetailedSidebar from './EventDetailedSidebar';
-import {
-  listenToEventFromFirestore,
-  listenToEventsFromFirestore,
-} from '../../../app/firestore/firestoreService';
+import { listenToEventFromFirestore } from '../../../app/firestore/firestoreService';
 import { listenToEvents } from '../eventActions';
 import LoadingComponent from '../../../app/layout/LoadingComponent';
 import { useDispatch } from 'react-redux';
