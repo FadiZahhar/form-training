@@ -25,16 +25,15 @@ export default function AccountPage() {
                 'Passwords do not match'
               ),
             })}
-            onSubmit={(values) => {
-              // {async (values, { setSubmitting, setErrors }) => {
-              // try {
-              //     await updateUserPassword(values);
-              // } catch (error) {
-              //     setErrors({auth: error.message});
-              // } finally {
-              //     setSubmitting(false);
-              // }
-              console.log(values);
+            onSubmit={async (values, { setSubmitting, setErrors }) => {
+              try {
+                await updateUserPassword(values);
+              } catch (error) {
+                setErrors({ auth: error.message });
+              } finally {
+                //setting setSubmitting once only it will execute in try and catch
+                setSubmitting(false);
+              }
             }}
           >
             {({ errors, isSubmitting, isValid, dirty }) => (
