@@ -81,4 +81,4 @@ export async function updateUserProfile(profile) {
     } catch (error) {
         throw error
     }
-}
+} 	
