@@ -17,9 +17,9 @@ export function verifyAuth() {
         return firbase.auth().onAuthStateChanged(user => {
             if (user) {
                 dispatch(signInUser(user))
-                const profileRef = getUserProfile(user.uid)
+                const profileRef = getUserProfile(user.uid);
                 profileRef.onSnapshot(snapshot => {
-                    dispatch(listenToCurrentUserProfile(dataFromSnapshot(snapshot)))
+                    dispatch(listenToCurrentUserProfile(dataFromSnapshot(snapshot)));
                     dispatch({ type: APP_LOADED })
                 })
 
