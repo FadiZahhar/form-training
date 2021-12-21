@@ -1,10 +1,10 @@
-import React, {useState} from 'react';
-import { Segment, Header, Button,FormField, Label } from 'semantic-ui-react';
+import React from 'react';
+import { Segment, Header, Button } from 'semantic-ui-react';
 import cuid from 'cuid';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { creatEvent,updateEvent } from '../eventAction';
-import { Formik, Form,Field, ErrorMessage } from 'formik';
+import { Formik, Form } from 'formik';
 import * as Yup from 'yup';
 import MyTextInput from '../../../app/common/form/MyTextInput';
 
@@ -23,57 +23,57 @@ export default function EventForm({match,history}){
     }
 
     const validationSchema = Yup.object({
-        title: Yup.string().required('You must provide a title')
-    })
+        
+        
+        
+        title: Yup.string().required('You must provide a title'),
+        category: Yup.string().required('You must provide a category'),
+        description: Yup.string().required('You must provide a description'),
+        city: Yup.string().required('You must provide a city'),
+        venue: Yup.string().required('You must provide a venue'),
+        date: Yup.string().required('You must provide a date')
+
+
+    });
     
-    //  function handler () {
-         
-    //     selectedEvent 
-    //     ? dispatch(updateEvent({...selectedEvent,...values}))
-    //      : dispatch(creatEvent(
-    //             {...values,
-    //              id: cuid(), 
-    //              hostedBy: 'Bob',
-    //              attendees: [], 
-    //              hostPhotoURL: '/assets/user.png' 
-    //             }));
-    //             history.push('/events');
-    //     }
+
 
 
 
     return(
         <Segment clearing>
-            <Header content={selectedEvent ? 'Editing':'Create new event'}/>
             <Formik 
                 initialValues={initialValues}
                 validationSchema={validationSchema}
-                onSubmit={values => console.log(values)}
+                onSubmit={values =>  {
+                          selectedEvent 
+                    ? dispatch(updateEvent({...selectedEvent,...values}))
+                     : dispatch(creatEvent(
+                            {...values,
+                             id: cuid(), 
+                             hostedBy: 'Bob',
+                             attendees: [], 
+                             hostPhotoURL: '/assets/user.png' 
+                            })
+                            );
+                            history.push('/events');
+                        }}
             >
 
                     <Form className='ui form'>
+
+                    <Header sub color='teal' content='Event Details'/>
+
                      <MyTextInput name='title' placeholder='Event title'/>
-                    
-                     <FormField >
-                       <Field name='category' placeholder='Category'/>
-                     </FormField>
+                     <MyTextInput name='category' placeholder='Category'/>
+                     <MyTextInput name='description' placeholder='Description'/>
+                     
+                     <Header sub color='teal' content='Event Location Detailes'/>
 
-                     <FormField >
-                       <Field name='description' placeholder='Description'/>
-                     </FormField>
-
-                     <FormField >
-                       <Field name='city' placeholder='City'/>
-                     </FormField>
-
-                     <FormField >
-                       <Field name='venue' placeholder='Venue'/>
-                     </FormField>
-
-                     <FormField >
-                       <Field name='date' placeholder='Event date' type='date'/>
-                     </FormField>
-
+                     <MyTextInput name='city' placeholder='City'/>
+                     <MyTextInput name='venue' placeholder='Venue'/>
+                     <MyTextInput name='date' placeholder='Event date' type='date'/>
+                     
 
 
                      <Button type='submit' floated='right' positive content='Submit'/>
