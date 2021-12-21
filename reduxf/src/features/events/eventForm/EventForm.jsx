@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { creatEvent,updateEvent } from '../eventAction';
 import { Formik, Form,Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
+import MyTextInput from '../../../app/common/form/MyTextInput';
 
 export default function EventForm({match,history}){
     const dispatch = useDispatch();
@@ -51,10 +52,7 @@ export default function EventForm({match,history}){
             >
 
                     <Form className='ui form'>
-                     <FormField >
-                       <Field name='title' placeholder='Event title'/>
-                       <ErrorMessage name='title' render={error => <Label  basic color='red' content={error}/>}/>
-                     </FormField>
+                     <MyTextInput name='title' placeholder='Event title'/>
                     
                      <FormField >
                        <Field name='category' placeholder='Category'/>
