@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Grid } from 'semantic-ui-react';
 import EventList from './EventList';
 import { useDispatch, useSelector } from 'react-redux';
@@ -13,6 +13,16 @@ export default function EventDashboard() {
   const dispatch = useDispatch();
   const { events } = useSelector((state) => state.event);
   const { loading } = useSelector((state) => state.async);
+  const [predicate, setPredicate] = useState(
+    new Map([
+      ['startDate', new Date()],
+      ['filter', 'all'],
+    ])
+  );
+
+  function handleSetPredicate(key, value) {
+    setPredicate(new Map(predicate.set(key, value)));
+  }
 
   useFirestoreCollection({
     query: () => listenToEventsFromFirestore(),
@@ -33,7 +43,11 @@ export default function EventDashboard() {
       </Grid.Column>
       <Grid.Column width={6}>
         {/* without using the key in the EventForm it will lead to not update the props by not rerendring the component */}
-        <EventFilters />
+        <EventFilters
+          predicate={predicate}
+          setPredicate={handleSetPredicate}
+          loading={loading}
+        />
       </Grid.Column>
     </Grid>
   );
