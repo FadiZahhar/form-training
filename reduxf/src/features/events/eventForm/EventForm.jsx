@@ -7,6 +7,9 @@ import { creatEvent,updateEvent } from '../eventAction';
 import { Formik, Form } from 'formik';
 import * as Yup from 'yup';
 import MyTextInput from '../../../app/common/form/MyTextInput';
+import MyTextArea from '../../../app/common/form/MytextArea';
+import MySelectInput from '../../../app/common/form/MySelectInput';
+import { categoryData } from '../../../app/api/categoryOptions';
 
 export default function EventForm({match,history}){
     const dispatch = useDispatch();
@@ -65,8 +68,8 @@ export default function EventForm({match,history}){
                     <Header sub color='teal' content='Event Details'/>
 
                      <MyTextInput name='title' placeholder='Event title'/>
-                     <MyTextInput name='category' placeholder='Category'/>
-                     <MyTextInput name='description' placeholder='Description'/>
+                     <MySelectInput name='category' placeholder='Category' options={categoryData}/>
+                     <MyTextArea name='description' placeholder='Description' rows={3}/>
                      
                      <Header sub color='teal' content='Event Location Detailes'/>
 
