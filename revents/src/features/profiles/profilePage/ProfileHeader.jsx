@@ -1,4 +1,7 @@
-import { followUser } from '../../../app/firestore/firestoreService';
+import {
+  followUser,
+  unfollowUser,
+} from '../../../app/firestore/firestoreService';
 import React, { useState } from 'react';
 import { toast } from 'react-toastify';
 import {
@@ -25,6 +28,18 @@ export default function ProfileHeader({ profile, isCurrentUser }) {
       setLoading(false);
     }
   }
+
+  async function handleunFollowUser() {
+    setLoading(true);
+    try {
+      await unfollowUser(profile);
+    } catch (error) {
+      toast.error(error.message);
+    } finally {
+      setLoading(false);
+    }
+  }
+
   return (
     <Segment>
       <Grid>
@@ -69,6 +84,14 @@ export default function ProfileHeader({ profile, isCurrentUser }) {
                   />
                 </Reveal.Content>
               </Reveal>
+              <Button
+                basic
+                fluid
+                color="red"
+                content="unFollow"
+                onClick={handleunFollowUser}
+                loading={loading}
+              />
             </>
           )}
         </Grid.Column>
