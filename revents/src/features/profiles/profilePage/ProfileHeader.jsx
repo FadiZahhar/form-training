@@ -18,6 +18,7 @@ import {
 import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
 import { setFollowUser, setUnfollowUser } from '../profileAction';
+import { CLEAR_FOLLOWINGS } from '../profileConstants';
 
 export default function ProfileHeader({ profile, isCurrentUser }) {
   const dispatch = useDispatch();
@@ -38,6 +39,9 @@ export default function ProfileHeader({ profile, isCurrentUser }) {
       }
     }
     fetchFollwoingDoc().then(() => setLoading(false));
+    return () => {
+      dispatch({ type: CLEAR_FOLLOWINGS });
+    };
   }, [dispatch, profile.id, isCurrentUser]);
 
   async function handleFollowUser() {
