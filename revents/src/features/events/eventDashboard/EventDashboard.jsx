@@ -8,11 +8,13 @@ import { listenToEvents } from '../eventActions';
 
 import useFirestoreCollection from '../../../app/hooks/useFirestoreCollection';
 import { listenToEventsFromFirestore } from '../../../app/firestore/firestoreService';
+import EventsFeed from './EventsFeed';
 
 export default function EventDashboard() {
   const dispatch = useDispatch();
   const { events } = useSelector((state) => state.event);
   const { loading } = useSelector((state) => state.async);
+  const { authenticated } = useSelector((state) => state.auth);
   const [predicate, setPredicate] = useState(
     new Map([
       ['startDate', new Date()],
@@ -43,6 +45,7 @@ export default function EventDashboard() {
       </Grid.Column>
       <Grid.Column width={6}>
         {/* without using the key in the EventForm it will lead to not update the props by not rerendring the component */}
+        {authenticated && <EventsFeed />}
         <EventFilters
           predicate={predicate}
           setPredicate={handleSetPredicate}
