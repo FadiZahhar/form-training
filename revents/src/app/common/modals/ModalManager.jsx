@@ -4,12 +4,11 @@ import TestModal from '../../../features/sandbox/TestModal';
 import LoginForm from '../../../features/auth/LoginForm';
 import RegisterForm from '../../../features/auth/RegisterForm';
 
-// responsoble for displaying the modal
 export default function ModalManager() {
   const modalLookup = {
-    TestModal,
-    LoginForm,
-    RegisterForm,
+      TestModal,
+      LoginForm,
+      RegisterForm
   };
   const currentModal = useSelector((state) => state.modals);
   let renderedModal;

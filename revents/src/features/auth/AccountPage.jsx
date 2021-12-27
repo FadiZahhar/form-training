@@ -31,7 +31,6 @@ export default function AccountPage() {
               } catch (error) {
                 setErrors({ auth: error.message });
               } finally {
-                //setting setSubmitting once only it will execute in try and catch
                 setSubmitting(false);
               }
             }}

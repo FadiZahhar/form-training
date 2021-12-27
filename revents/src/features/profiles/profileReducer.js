@@ -1,6 +1,14 @@
 import {
+    LISTEN_TO_CURRENT_USER_PROFILE,
+    LISTEN_TO_SELECTED_USER_PROFILE,
+    LISTEN_TO_USER_PHOTOS,
+    LISTEN_TO_USER_EVENTS,
+    LISTEN_TO_FOLLOWERS,
+    LISTEN_TO_FOLLOWINGS,
+    SET_FOLLOW_USER,
+    SET_UNFOLLOW_USER,
     CLEAR_FOLLOWINGS,
-    LISTEN_TO_CURRENT_USER_PROFILE, LISTEN_TO_FOLLOWERS, LISTEN_TO_FOLLOWINGS, LISTEN_TO_SELECTED_USER_PROFILE, LISTEN_TO_USER_EVENTS, LISTEN_TO_USER_PHOTOS, SET_FOLLOW_USER, SET_UNFOLLOW_USER,
+    LISTEN_TO_FEED,
 } from './profileConstants';
 
 const initialState = {
@@ -10,7 +18,8 @@ const initialState = {
     profileEvents: [],
     followers: [],
     followings: [],
-    followingUser: false
+    followingUser: false,
+    feed: [],
 };
 
 export default function profileReducer(
@@ -63,6 +72,11 @@ export default function profileReducer(
                 ...state,
                 followers: [],
                 followings: [],
+            };
+        case LISTEN_TO_FEED:
+            return {
+                ...state,
+                feed: payload,
             };
         default: {
             return state;

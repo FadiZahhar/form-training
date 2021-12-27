@@ -1,6 +1,6 @@
 import React, { useCallback } from 'react';
 import { useDropzone } from 'react-dropzone';
-import { Header, Icon } from 'semantic-ui-react';
+import { Icon, Header } from 'semantic-ui-react';
 
 export default function PhotoWidgetDropzone({ setFiles }) {
   const dropzoneStyles = {
@@ -16,7 +16,6 @@ export default function PhotoWidgetDropzone({ setFiles }) {
 
   const onDrop = useCallback(
     (acceptedFiles) => {
-      // Do something with the files
       setFiles(
         acceptedFiles.map((file) =>
           Object.assign(file, {

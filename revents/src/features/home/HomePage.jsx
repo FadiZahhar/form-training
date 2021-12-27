@@ -1,12 +1,12 @@
-import React from "react";
+import React from 'react';
 import {
-  Button,
+  Segment,
   Container,
   Header,
-  Icon,
   Image,
-  Segment,
-} from "semantic-ui-react";
+  Button,
+  Icon,
+} from 'semantic-ui-react';
 
 export default function HomePage({ history }) {
   return (
@@ -20,7 +20,7 @@ export default function HomePage({ history }) {
           />
           Re-vents
         </Header>
-        <Button onClick={()=>history.push('/events')} size="huge" inverted>
+        <Button onClick={() => history.push('/events')} size="huge" inverted>
           Get started
           <Icon name="right arrow" inverted />
         </Button>

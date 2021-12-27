@@ -1,6 +1,6 @@
 import React from 'react';
+import { Segment, Item, Label } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
-import { Item, Label, Segment } from 'semantic-ui-react';
 
 export default function EventDetailedSidebar({ attendees, hostUid }) {
   return (
@@ -29,7 +29,7 @@ export default function EventDetailedSidebar({ attendees, hostUid }) {
                   style={{ position: 'absolute' }}
                   color="orange"
                   ribbon="right"
-                  content="HOST"
+                  content="Host"
                 />
               )}
               <Item.Image

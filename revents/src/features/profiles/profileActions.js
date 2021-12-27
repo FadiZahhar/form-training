@@ -1,4 +1,4 @@
-import { LISTEN_TO_CURRENT_USER_PROFILE, LISTEN_TO_FOLLOWERS, LISTEN_TO_FOLLOWINGS, LISTEN_TO_SELECTED_USER_PROFILE, LISTEN_TO_USER_EVENTS, LISTEN_TO_USER_PHOTOS, SET_FOLLOW_USER, SET_UNFOLLOW_USER } from './profileConstants';
+import { LISTEN_TO_CURRENT_USER_PROFILE, LISTEN_TO_SELECTED_USER_PROFILE, LISTEN_TO_USER_PHOTOS, LISTEN_TO_USER_EVENTS, LISTEN_TO_FOLLOWERS, LISTEN_TO_FOLLOWINGS, SET_FOLLOW_USER, SET_UNFOLLOW_USER, LISTEN_TO_FEED } from './profileConstants';
 
 export function listenToCurrentUserProfile(profile) {
     return {
@@ -13,7 +13,8 @@ export function listenToSelectedUserProfile(profile) {
         payload: profile
     }
 }
-export function listentoUserPhotos(photos) {
+
+export function listenToUserPhotos(photos) {
     return {
         type: LISTEN_TO_USER_PHOTOS,
         payload: photos
@@ -26,12 +27,14 @@ export function listenToUserEvents(events) {
         payload: events
     }
 }
+
 export function listenToFollowers(followers) {
     return {
         type: LISTEN_TO_FOLLOWERS,
         payload: followers
     }
 }
+
 export function listenToFollowings(followings) {
     return {
         type: LISTEN_TO_FOLLOWINGS,
@@ -48,5 +51,12 @@ export function setFollowUser() {
 export function setUnfollowUser() {
     return {
         type: SET_UNFOLLOW_USER
+    }
+}
+
+export function listenToFeed(feed) {
+    return {
+        type: LISTEN_TO_FEED,
+        payload: feed
     }
 }

@@ -1,14 +1,13 @@
-import { useField, useFormikContext } from 'formik';
 import React from 'react';
-import DatePicker from 'react-datepicker';
+import { useField, useFormikContext } from 'formik';
 import { FormField, Label } from 'semantic-ui-react';
+import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 
 export default function MyDateInput({ label, ...props }) {
   const { setFieldValue } = useFormikContext();
   const [field, meta] = useField(props);
   return (
-    // the !!meta.error will cast to boolean
     <FormField error={meta.touched && !!meta.error}>
       <label>{label}</label>
       <DatePicker

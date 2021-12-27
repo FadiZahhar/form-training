@@ -1,10 +1,4 @@
-import {
-  followUser,
-  getFollowingDoc,
-  unfollowUser,
-} from '../../../app/firestore/firestoreService';
-import React, { useEffect, useState } from 'react';
-import { toast } from 'react-toastify';
+import React from 'react';
 import {
   Segment,
   Grid,
@@ -15,9 +9,16 @@ import {
   Reveal,
   Button,
 } from 'semantic-ui-react';
-import { useSelector } from 'react-redux';
-import { useDispatch } from 'react-redux';
-import { setFollowUser, setUnfollowUser } from '../profileAction';
+import { useState } from 'react';
+import { toast } from 'react-toastify';
+import {
+  followUser,
+  unfollowUser,
+  getFollowingDoc,
+} from '../../../app/firestore/firestoreService';
+import { useSelector, useDispatch } from 'react-redux';
+import { useEffect } from 'react';
+import { setFollowUser, setUnfollowUser } from '../profileActions';
 import { CLEAR_FOLLOWINGS } from '../profileConstants';
 
 export default function ProfileHeader({ profile, isCurrentUser }) {
@@ -28,7 +29,7 @@ export default function ProfileHeader({ profile, isCurrentUser }) {
   useEffect(() => {
     if (isCurrentUser) return;
     setLoading(true);
-    async function fetchFollwoingDoc() {
+    async function fetchFollowingDoc() {
       try {
         const followingDoc = await getFollowingDoc(profile.id);
         if (followingDoc && followingDoc.exists) {
@@ -38,7 +39,7 @@ export default function ProfileHeader({ profile, isCurrentUser }) {
         toast.error(error.message);
       }
     }
-    fetchFollwoingDoc().then(() => setLoading(false));
+    fetchFollowingDoc().then(() => setLoading(false));
     return () => {
       dispatch({ type: CLEAR_FOLLOWINGS });
     };
@@ -56,7 +57,7 @@ export default function ProfileHeader({ profile, isCurrentUser }) {
     }
   }
 
-  async function handleunFollowUser() {
+  async function handleUnfollowUser() {
     setLoading(true);
     try {
       await unfollowUser(profile);
@@ -107,16 +108,16 @@ export default function ProfileHeader({ profile, isCurrentUser }) {
                 </Reveal.Content>
                 <Reveal.Content hidden style={{ width: '100%' }}>
                   <Button
+                    onClick={
+                      followingUser
+                        ? () => handleUnfollowUser()
+                        : () => handleFollowUser()
+                    }
+                    loading={loading}
                     basic
                     fluid
                     color={followingUser ? 'red' : 'green'}
                     content={followingUser ? 'Unfollow' : 'Follow'}
-                    onClick={
-                      followingUser
-                        ? () => handleunFollowUser()
-                        : () => handleFollowUser()
-                    }
-                    loading={loading}
                   />
                 </Reveal.Content>
               </Reveal>

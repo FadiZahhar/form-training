@@ -1,37 +1,40 @@
-/* global google*/
+/* global google */
 import React, { useState } from 'react';
-import { Button, Confirm, Header, Segment } from 'semantic-ui-react';
+import { Segment, Header, Button, Confirm } from 'semantic-ui-react';
 import { Link, Redirect } from 'react-router-dom';
-import { useSelector } from 'react-redux';
-import { useDispatch } from 'react-redux';
-import { listenToEvents } from '../eventActions';
+import { useSelector, useDispatch } from 'react-redux';
+import { listenToSelectedEvent, clearSelectedEvent } from '../eventActions';
 import { Formik, Form } from 'formik';
 import * as Yup from 'yup';
 import MyTextInput from '../../../app/common/form/MyTextInput';
 import MyTextArea from '../../../app/common/form/MyTextArea';
 import MySelectInput from '../../../app/common/form/MySelectInput';
-import MyDateInput from '../../../app/common/form/MyDateInput';
 import { categoryData } from '../../../app/api/categoryOptions';
+import MyDateInput from '../../../app/common/form/MyDateInput';
 import MyPlaceInput from '../../../app/common/form/MyPlaceInput';
-import useFirestoreDoc from '../../../app/hooks/useFirestoreDoc';
 import {
-  addEventToFirestore,
-  cancelEventToggle,
   listenToEventFromFirestore,
   updateEventInFirestore,
+  addEventToFirestore,
+  cancelEventToggle,
 } from '../../../app/firestore/firestoreService';
+import useFirestoreDoc from '../../../app/hooks/useFirestoreDoc';
 import LoadingComponent from '../../../app/layout/LoadingComponent';
 import { toast } from 'react-toastify';
+import { useEffect } from 'react';
 
-export default function EventForm({ match, history }) {
+export default function EventForm({ match, history, location }) {
   const dispatch = useDispatch();
   const [loadingCancel, setLoadingCancel] = useState(false);
   const [confirmOpen, setConfirmOpen] = useState(false);
-  const selectedEvent = useSelector((state) =>
-    state.event.events.find((e) => e.id === match.params.id)
-  );
+  const { selectedEvent } = useSelector((state) => state.event);
   const { loading, error } = useSelector((state) => state.async);
-  // ?? used if selectedEvent is null then will go to empty values else its will be selectedEvent
+
+  useEffect(() => {
+    if (location.pathname !== '/createEvent') return;
+    dispatch(clearSelectedEvent());
+  }, [dispatch, location.pathname]);
+
   const initialValues = selectedEvent ?? {
     title: '',
     category: '',
@@ -73,22 +76,25 @@ export default function EventForm({ match, history }) {
   }
 
   useFirestoreDoc({
-    shoudExecute: !!match.params.id, //cast the id to boolean if there was an id its true else its false
+    shouldExecute:
+      match.params.id !== selectedEvent?.id &&
+      location.pathname !== '/createEvent',
     query: () => listenToEventFromFirestore(match.params.id),
-    data: (event) => dispatch(listenToEvents([event])),
+    data: (event) => dispatch(listenToSelectedEvent(event)),
     deps: [match.params.id, dispatch],
   });
+
   if (loading) return <LoadingComponent content="Loading event..." />;
 
   if (error) return <Redirect to="/error" />;
+
   return (
     <Segment clearing>
       <Formik
+        enableReinitialize
         initialValues={initialValues}
         validationSchema={validationSchema}
         onSubmit={async (values, { setSubmitting }) => {
-          // we got all the attribitues in the selectedEvent(contains all things JSON not just the values of the form), and overite them with the values of form
-
           try {
             selectedEvent
               ? await updateEventInFirestore(values)
@@ -107,16 +113,16 @@ export default function EventForm({ match, history }) {
             <MyTextInput name="title" placeholder="Event title" />
             <MySelectInput
               name="category"
-              placeholder="category"
+              placeholder="Event category"
               options={categoryData}
             />
-            <MyTextArea name="description" placeholder="description" rows={3} />
+            <MyTextArea name="description" placeholder="Description" rows={3} />
             <Header sub color="teal" content="Event Location Details" />
-            <MyPlaceInput name="city" placeholder="city" />
+            <MyPlaceInput name="city" placeholder="City" />
             <MyPlaceInput
               name="venue"
               disabled={!values.city.latLng}
-              placeholder="venue"
+              placeholder="Venue"
               options={{
                 location: new google.maps.LatLng(values.city.latLng),
                 radius: 1000,
@@ -130,6 +136,7 @@ export default function EventForm({ match, history }) {
               showTimeSelect
               timeCaption="time"
               dateFormat="MMMM d, yyyy h:mm a"
+              autoComplete="off"
             />
             {selectedEvent && (
               <Button
@@ -140,14 +147,13 @@ export default function EventForm({ match, history }) {
                 content={
                   selectedEvent.isCancelled
                     ? 'Reactivate event'
-                    : 'Cancel event'
+                    : 'Cancel Event'
                 }
                 onClick={() => setConfirmOpen(true)}
               />
             )}
             <Button
               loading={isSubmitting}
-              // dirty used for update if the data was the same it will be disabled
               disabled={!isValid || !dirty || isSubmitting}
               type="submit"
               floated="right"
@@ -168,8 +174,8 @@ export default function EventForm({ match, history }) {
       <Confirm
         content={
           selectedEvent?.isCancelled
-            ? 'This will reactivate the event are you sure?'
-            : 'This will cancel the event are you sure?'
+            ? 'This will reactivate the event - are you sure?'
+            : 'This will cancel the event - are you sure?'
         }
         open={confirmOpen}
         onCancel={() => setConfirmOpen(false)}

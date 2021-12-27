@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Button, Grid, Icon, Segment } from 'semantic-ui-react';
+import { Segment, Grid, Icon, Button } from 'semantic-ui-react';
 import { format } from 'date-fns';
 import EventDetailedMap from './EventDetailedMap';
 
@@ -37,9 +37,7 @@ export default function EventDetailedInfo({ event }) {
           </Grid.Column>
           <Grid.Column width={4}>
             <Button
-              onClick={() => {
-                setMapOpenToggle(!mapOpen);
-              }}
+              onClick={() => setMapOpenToggle(!mapOpen)}
               color="teal"
               size="tiny"
               content={mapOpen ? 'Hide map' : 'Show map'}

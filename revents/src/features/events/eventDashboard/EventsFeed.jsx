@@ -1,19 +1,37 @@
 import React from 'react';
-import { Feed, Header, Segment } from 'semantic-ui-react';
+import { Header, Segment, Feed } from 'semantic-ui-react';
+import { useDispatch, useSelector } from 'react-redux';
+import { useEffect } from 'react';
+import { getUserFeedRef, firebaseObjectToArray } from '../../../app/firestore/firebaseService';
+import { listenToFeed } from '../../profiles/profileActions';
+import EventFeedItem from './EventFeedItem';
+import { onValue, off } from '@firebase/database';
 
 export default function EventsFeed() {
-  const image = '/assets/user.png';
-  const date = '3 days ago';
-  const summary = 'Lamees joined an event';
+  const dispatch = useDispatch();
+  const { feed } = useSelector((state) => state.profile);
+
+  useEffect(() => {
+    onValue(getUserFeedRef(), snapshot => {
+        if (!snapshot.exists()) {
+            return;
+        }
+        const feed = firebaseObjectToArray(snapshot.val()).reverse();
+        dispatch(listenToFeed(feed))
+    })
+    return () => {
+        off(getUserFeedRef())
+    }
+  }, [dispatch])
+
   return (
     <>
-      <Header attached color="teal" icon="newspaper" content="News feed" />
-      <Segment attached="bottom">
+      <Header attached color='teal' icon='newspaper' content='News feed' />
+      <Segment attached='bottom'>
         <Feed>
-          <Feed.Event image={image} date={date} summary={summary} />
-          <Feed.Event image={image} date={date} summary={summary} />
-          <Feed.Event image={image} date={date} summary={summary} />
-          <Feed.Event image={image} date={date} summary={summary} />
+          {feed.map(post => (
+              <EventFeedItem post={post} key={post.id} />
+          ))}
         </Feed>
       </Segment>
     </>

@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { Tab } from 'semantic-ui-react';
 import AboutTab from './AboutTab';
+import PhotosTab from './PhotosTab';
 import EventsTab from './EventsTab';
 import FollowingTab from './FollowingTab';
-import PhotosTab from './PhotosTab';
 
 export default function ProfileContent({ profile, isCurrentUser }) {
   const [activeTab, setActiveTab] = useState(0);

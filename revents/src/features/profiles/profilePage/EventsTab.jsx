@@ -2,14 +2,14 @@ import React, { useState } from 'react';
 import { Grid, Header, Tab, Card, Image } from 'semantic-ui-react';
 import { format } from 'date-fns';
 import { Link } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import useFirestoreCollection from '../../../app/hooks/useFirestoreCollection';
 import { getUserEventsQuery } from '../../../app/firestore/firestoreService';
-import { listenToUserEvents } from '../profileAction';
+import { listenToUserEvents } from '../profileActions';
 
 export default function EventsTab({ profile }) {
   const dispatch = useDispatch();
-  const [activeTab, setActiveTab] = useState(false);
+  const [activeTab, setActiveTab] = useState(0);
   const { profileEvents } = useSelector((state) => state.profile);
   const { loading } = useSelector((state) => state.async);
 
@@ -18,10 +18,11 @@ export default function EventsTab({ profile }) {
     data: (events) => dispatch(listenToUserEvents(events)),
     deps: [dispatch, activeTab, profile.id],
   });
+
   const panes = [
     { menuItem: 'Future Events', pane: { key: 'future' } },
-    { menuItem: 'Past Events', pane: { key: 'Past' } },
-    { menuItem: 'Hosting Events', pane: { key: 'hosting' } },
+    { menuItem: 'Past Events', pane: { key: 'past' } },
+    { menuItem: 'Hosting', pane: { key: 'hosting' } },
   ];
   return (
     <Tab.Pane loading={loading}>

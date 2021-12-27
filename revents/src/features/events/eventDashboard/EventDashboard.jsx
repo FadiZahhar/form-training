@@ -1,45 +1,43 @@
-import React, { useEffect, useState } from 'react';
-import { Button, Grid, Loader } from 'semantic-ui-react';
+import React from 'react';
+import { Grid, Loader } from 'semantic-ui-react';
 import EventList from './EventList';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import EventListItemPlaceholder from './EventListItemPlaceholder';
 import EventFilters from './EventFilters';
 import { fetchEvents } from '../eventActions';
+import { useState } from 'react';
 import EventsFeed from './EventsFeed';
+import { useEffect } from 'react';
+import { RETAIN_STATE } from '../eventConstants';
 
 export default function EventDashboard() {
   const limit = 2;
   const dispatch = useDispatch();
-  const { events, moreEvents } = useSelector((state) => state.event);
+  const {
+    events,
+    moreEvents,
+    filter,
+    startDate,
+    lastVisible,
+    retainState,
+  } = useSelector((state) => state.event);
   const { loading } = useSelector((state) => state.async);
   const { authenticated } = useSelector((state) => state.auth);
-  const [lastDocSnapshot, setLastDocSnapshot] = useState(null);
   const [loadingInitial, setLoadingInitial] = useState(false);
-  const [predicate, setPredicate] = useState(
-    new Map([
-      ['startDate', new Date()],
-      ['filter', 'all'],
-    ])
-  );
-
-  function handleSetPredicate(key, value) {
-    setPredicate(new Map(predicate.set(key, value)));
-  }
 
   useEffect(() => {
+    if (retainState) return;
     setLoadingInitial(true);
-    dispatch(fetchEvents(predicate, limit)).then((lastVisible) => {
-      setLastDocSnapshot(lastVisible);
+    dispatch(fetchEvents(filter, startDate, limit)).then(() => {
       setLoadingInitial(false);
     });
-  }, [dispatch, predicate]);
+    return () => {
+      dispatch({ type: RETAIN_STATE });
+    };
+  }, [dispatch, filter, startDate, retainState]);
 
   function handleFetchNextEvents() {
-    dispatch(fetchEvents(predicate, limit, lastDocSnapshot)).then(
-      (lastVisible) => {
-        setLastDocSnapshot(lastVisible);
-      }
-    );
+    dispatch(fetchEvents(filter, startDate, limit, lastVisible));
   }
 
   return (
@@ -59,13 +57,8 @@ export default function EventDashboard() {
         />
       </Grid.Column>
       <Grid.Column width={6}>
-        {/* without using the key in the EventForm it will lead to not update the props by not rerendring the component */}
         {authenticated && <EventsFeed />}
-        <EventFilters
-          predicate={predicate}
-          setPredicate={handleSetPredicate}
-          loading={loading}
-        />
+        <EventFilters loading={loading} />
       </Grid.Column>
       <Grid.Column width={10}>
         <Loader active={loading} />

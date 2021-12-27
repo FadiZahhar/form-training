@@ -1,12 +1,14 @@
-import eventReducer from '../../features/events/eventReducer'
-import testReducer from '../../features/sandbox/testReducer'
-import { combineReducers } from 'redux'
-import modalReducer from '../common/modals/modalReducer'
-import authReducer from '../../features/auth/authReducer'
-import asyncReducer from '../async/asyncReducer'
-import profileReducer from '../../features/profiles/profileReducer'
+import { combineReducers } from 'redux';
+import testReducer from '../../features/sandbox/testReducer';
+import eventReducer from '../../features/events/eventReducer';
+import modalReducer from '../common/modals/modalReducer';
+import authReducer from '../../features/auth/authReducer';
+import asyncReducer from '../async/asyncReducer';
+import profileReducer from '../../features/profiles/profileReducer';
+import { connectRouter } from 'connected-react-router';
 
-const rootReducer = combineReducers({
+const rootReducer = (history) => combineReducers({
+    router: connectRouter(history),
     test: testReducer,
     event: eventReducer,
     modals: modalReducer,
@@ -15,4 +17,4 @@ const rootReducer = combineReducers({
     profile: profileReducer
 })
 
-export default rootReducer
+export default rootReducer;

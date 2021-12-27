@@ -1,14 +1,14 @@
-import PhotoUploadWidget from '../../../app/common/photos/PhotoUploadWidget';
 import React, { useState } from 'react';
 import { Grid, Header, Button, Tab, Card, Image } from 'semantic-ui-react';
-import useFirestoreCollection from '../../../app/hooks/useFirestoreCollection';
+import PhotoUploadWidget from '../../../app/common/photos/PhotoUploadWidget';
+import useFirestoreColection from '../../../app/hooks/useFirestoreCollection';
 import {
   getUserPhotos,
   setMainPhoto,
   deletePhotoFromCollection,
 } from '../../../app/firestore/firestoreService';
 import { useDispatch, useSelector } from 'react-redux';
-import { listentoUserPhotos } from '../profileAction';
+import { listenToUserPhotos } from '../profileActions';
 import { toast } from 'react-toastify';
 import { deleteFromFirebaseStorage } from '../../../app/firestore/firebaseService';
 
@@ -20,9 +20,9 @@ export default function PhotosTab({ profile, isCurrentUser }) {
   const [updating, setUpdating] = useState({ isUpdating: false, target: null });
   const [deleting, setDeleting] = useState({ isDeleting: false, target: null });
 
-  useFirestoreCollection({
+  useFirestoreColection({
     query: () => getUserPhotos(profile.id),
-    data: (photos) => dispatch(listentoUserPhotos(photos)),
+    data: (photos) => dispatch(listenToUserPhotos(photos)),
     deps: [profile.id, dispatch],
   });
 
