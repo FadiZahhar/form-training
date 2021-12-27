@@ -193,6 +193,7 @@ export async function setMainPhoto(photo) {
         const userFollowingSnap = await getDocs(userFollowingRef);
         userFollowingSnap.docs.forEach(docRef => {
             let followingDocRef = doc(db, 'following', docRef.id, 'userFollowers', user.uid);
+
             batch.update(followingDocRef, {
                 photoURL: photo.url
             })
