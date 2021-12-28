@@ -15,6 +15,7 @@ export default function ProfilePage({ match }) {
   );
   const { currentUser } = useSelector((state) => state.auth);
   const { loading, error } = useSelector((state) => state.async);
+
   let profile;
 
   useFirestoreDoc({

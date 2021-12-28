@@ -21,7 +21,7 @@ const initialState = {
     lastVisible: null,
     filter: 'all',
     startDate: new Date(),
-    retainState: false,
+    retainState: false
 };
 
 export default function eventReducer(state = initialState, { type, payload }) {
