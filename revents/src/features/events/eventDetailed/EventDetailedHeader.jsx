@@ -95,6 +95,7 @@ export default function EventDetailedHeader({ event, isHost, isGoing }) {
                 </Button>
               ) : (
                 <Button
+                  // if its authenticated we handle the join event otherwise open the modal to sign in
                   onClick={
                     authenticated
                       ? handleUserJoinEvent
