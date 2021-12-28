@@ -8,6 +8,7 @@ import { createBrowserHistory } from 'history';
 export const history = createBrowserHistory();
 
 export function configureStore() {
+    // we passed here the history
     const store = createStore(rootReducer(history), composeWithDevTools(applyMiddleware(thunk)))
 
     store.dispatch(verifyAuth());

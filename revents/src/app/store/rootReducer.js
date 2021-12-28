@@ -7,7 +7,9 @@ import asyncReducer from '../async/asyncReducer';
 import profileReducer from '../../features/profiles/profileReducer';
 import { connectRouter } from 'connected-react-router';
 
+// added history as parameter
 const rootReducer = (history) => combineReducers({
+    // we stored the previous router using connected-react-router
     router: connectRouter(history),
     test: testReducer,
     event: eventReducer,
