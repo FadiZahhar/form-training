@@ -16,8 +16,10 @@ export default function UnauthModal({ history, setModalOpen }) {
       return;
     }
     if (history && prevLocation) {
+      // pushing the user to previous location if their
       history.push(prevLocation.pathname);
     } else {
+      // or pushing to the events page
       history.push('/events');
     }
     setOpen(false);

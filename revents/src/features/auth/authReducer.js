@@ -31,6 +31,7 @@ export default function authReducer(state = initialState, { type, payload }) {
         case LOCATION_CHANGE:
             return {
                 ...state,
+                // with this we will have access to the previous location
                 prevLocation: state.currentLocation,
                 currentLocation: payload.location
             }
