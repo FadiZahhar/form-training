@@ -10,6 +10,7 @@ export default function PrivateRoute({
 }) {
   const { authenticated } = useSelector((state) => state.auth);
   return (
+    // used to have access to these routes only if authenticated else the modal unauth will appear
     <Route
       {...rest}
       render={(props) =>

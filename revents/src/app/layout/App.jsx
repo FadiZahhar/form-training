@@ -37,6 +37,7 @@ export default function App() {
               <Route exact path="/events" component={EventDashboard} />
               <Route exact path="/sandbox" component={Sandbox} />
               <Route path="/events/:id" component={EventDetailedPage} />
+              {/* we changed them to private route */}
               <PrivateRoute
                 path={['/createEvent', '/manage/:id']}
                 component={EventForm}
