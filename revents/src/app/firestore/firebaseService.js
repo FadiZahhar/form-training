@@ -1,4 +1,3 @@
-
 import { setUserProfileData } from './firestoreService';
 import { toast } from 'react-toastify';
 import {
@@ -105,6 +104,3 @@ export function getUserFeedRef() {
     if (!user) return;
     return query(fbRef(db, `posts/${user.uid}`), orderByKey(), limitToLast(5))
 }
-
-
-

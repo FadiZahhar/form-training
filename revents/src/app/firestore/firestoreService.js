@@ -1,4 +1,3 @@
-
 import {
     getFirestore,
     collection,
@@ -193,7 +192,6 @@ export async function setMainPhoto(photo) {
         const userFollowingSnap = await getDocs(userFollowingRef);
         userFollowingSnap.docs.forEach(docRef => {
             let followingDocRef = doc(db, 'following', docRef.id, 'userFollowers', user.uid);
-
             batch.update(followingDocRef, {
                 photoURL: photo.url
             })
@@ -308,4 +306,3 @@ export function getFollowingDoc(profileId) {
     const userUid = auth.currentUser.uid;
     return getDoc(doc(db, 'following', userUid, 'userFollowing', profileId))
 }
-
