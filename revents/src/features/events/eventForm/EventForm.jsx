@@ -30,6 +30,7 @@ export default function EventForm({ match, history, location }) {
   const { selectedEvent } = useSelector((state) => state.event);
   const { loading, error } = useSelector((state) => state.async);
 
+  // to know the location if create to clear the selected event
   useEffect(() => {
     if (location.pathname !== '/createEvent') return;
     dispatch(clearSelectedEvent());
@@ -76,6 +77,7 @@ export default function EventForm({ match, history, location }) {
   }
 
   useFirestoreDoc({
+    // more specific to make sure the path name not createEvent
     shouldExecute:
       match.params.id !== selectedEvent?.id &&
       location.pathname !== '/createEvent',
@@ -91,6 +93,7 @@ export default function EventForm({ match, history, location }) {
   return (
     <Segment clearing>
       <Formik
+        // enable reinitialize so that it's capable of getting new values and populating
         enableReinitialize
         initialValues={initialValues}
         validationSchema={validationSchema}
@@ -136,6 +139,7 @@ export default function EventForm({ match, history, location }) {
               showTimeSelect
               timeCaption="time"
               dateFormat="MMMM d, yyyy h:mm a"
+              // turn off the autocomplete
               autoComplete="off"
             />
             {selectedEvent && (
